@@ -1,2 +1,7 @@
 johnsonFamilySuperbowl:
     component: serverless-next.js
+    inputs:
+        policy: "arn:aws:iam::534983912774:policy/FullLambda"
+
+entryTable:
+    component: '@serverless/aws-dynamodb'

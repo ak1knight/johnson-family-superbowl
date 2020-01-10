@@ -1,19 +1,21 @@
 {
-  "name": "johnson-family-superbowl",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "9.1.7",
-    "react": "16.12.0",
-    "react-dom": "16.12.0"
-  },
-  "devDependencies": {
-    "serverless": "^1.60.5",
-    "serverless-next.js": "^1.8.0"
-  }
+    "name": "johnson-family-superbowl",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "deploy": "serverless",
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+    },
+    "dependencies": {
+        "aws-sdk": "^2.601.0",
+        "next": "9.1.7",
+        "react": "16.12.0",
+        "react-dom": "16.12.0"
+    },
+    "devDependencies": {
+        "serverless": "^1.60.5",
+        "serverless-next.js": "^1.8.0"
+    }
 }
