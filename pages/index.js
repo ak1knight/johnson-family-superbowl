@@ -1,27 +1,37 @@
 import React from 'react'
-import Head from 'next/head'
-import Nav from '../components/nav'
 import EntryForm from "../components/entryform"
-import Question from "../components/question"
+import Layout from '../components/layout';
 
-let qs = [{question: "How old are you?"}, {question: "Where do you live?"}];
+let qs = [
+    {question: "National Anthem", options: {placeholder: "H:M"}}, 
+    {question: "How old are you?"}, 
+    {question: "Where do you live?"}
+];
 
 const Home = () => (
-  <div>
-    <Head>
-      <title>Home</title>
-      <link rel="icon" href="/favicon.ico" />
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" 
-    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" 
-    crossorigin="anonymous" />
-    </Head>
+    <Layout>
+        <div className="jumbotron jumbotron-fluid bg-primary text-white">
+            <div className="container">
+                <h1 className="display-4">Fluid jumbotron</h1>
+                <p className="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+            </div>
+        </div>
 
-    <Nav />
-
-    <div className="container mt-3">
-        <EntryForm questions={qs} />
-    </div>
-  </div>
+        <div className="container mt-3">
+            <div className="row">
+                <div className="col-3">
+                    <div id="form-sidebar" className="flex-column list-group">
+                        {qs.map(q => (
+                            <a className="list-group-item list-group-item-action" href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{q.question}</a>
+                        ))}
+                    </div>
+                </div>
+                <div className="col">
+                    <EntryForm questions={qs} />
+                </div>
+            </div>
+        </div>
+    </Layout>
 )
 
 export default Home

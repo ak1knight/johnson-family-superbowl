@@ -19,13 +19,13 @@ const Nav = () => (
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
-                    <Link activeClassName="active" href="/entryform"><li className="nav-item">
+                    <Link href="/"><li className="nav-item">
                         <span className="nav-link">Entry Form <span className="sr-only">(current)</span></span>
                     </li></Link>
-                    <Link activeClassName="active" href="/bigboard"><li className="nav-item">
+                    <Link href="/big_board"><li className="nav-item">
                         <span className="nav-link">The Big Board</span>
                     </li></Link>
-                    <Link activeClassName="active" href="/propbetboard"><li className="nav-item">
+                    <Link href="/propbetboard"><li className="nav-item">
                         <span className="nav-link">Prop Bet Board</span>
                     </li></Link>
                 </ul>

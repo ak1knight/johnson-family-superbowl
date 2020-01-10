@@ -1,11 +1,14 @@
 import React from 'react'
 
 const Card = (props) => (
-    <div className="card bg-light mb-3">
+    <div id={props.id} className="card mb-3">
+        {!!props.title && <h4 className="card-header">{props.title}</h4>}
         <div className="card-body">
-            <h2>{props.title}</h2>
             {props.children}
         </div>
+        {!!props.extrainfo && <div className="card-footer text-muted">
+            {props.extrainfo}
+        </div>}
     </div>
 )
 
