@@ -6,12 +6,12 @@ const getDynamoDBClient = () => {
     // dynamodb is replicated across us-west-2 and eu-west-2
     // use us-west-2 for us regions or eu-west-2 for eu regions
     // you can tweak this to suit your needs
-    const edgeRegion = process.env.AWS_REGION || "us-west-1";
+    const edgeRegion = "us-west-1";
     const dynamoDbRegion = "us-west-1";
 
     const options = {
         convertEmptyValues: true,
-        region: process.env.dbRegion
+        region: dynamoDbRegion
     };
 
     const client = process.env.LOCAL_DYNAMO_DB_ENDPOINT
@@ -28,7 +28,7 @@ module.exports = {
     readEntries: async () => {
         const { Items } = await getDynamoDBClient()
             .scan({
-                TableName: process.env.dbName
+                TableName: "SuperBowlEntries"
             })
             .promise();
 
@@ -37,7 +37,7 @@ module.exports = {
     getEntry: async entryId => {
         const { Items } = await getDynamoDBClient()
             .scan({
-                TableName: process.env.dbName
+                TableName: "SuperBowlEntries"
             })
             .promise();
 
@@ -48,7 +48,7 @@ module.exports = {
     createEntry: async entry => {
         await getDynamoDBClient()
             .put({
-                TableName: process.env.dbName,
+                TableName: "SuperBowlEntries",
                 Item: {
                     id: Date.now(),
                     entry
