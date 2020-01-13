@@ -33,11 +33,11 @@ const EntryForm = (props) => {
     };
 
     return <form data-spy="scroll" data-target="#form-sidebar" data-offset="0" onSubmit={handleSubmit}>
-        {props.questions.map(q => <Card id={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`} title={q.question}>
+        {props.questions.map(q => <Card id={`${q.question.toLowerCase().replace(/( |\W)/g, '')}`} title={q.question}>
             <input type="text" value={q.response} className="form-control" onChange={(e) => q.setResponse(e.target.value)} {...q.options}></input>
         </Card>)}
-        <Scores formData={formData} />
-        <Yards formData={formData} />
+        <Scores id="scores" formData={formData} />
+        <Yards id="yards" formData={formData} />
         <Card title="Enter Name">
             <div className="row justify-content-between">
                 <div className="col">

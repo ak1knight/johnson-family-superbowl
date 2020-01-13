@@ -1,6 +1,8 @@
 import React from 'react'
+import Scrollspy from 'react-scrollspy'
 import EntryForm from "../components/entryform"
-import Layout from '../components/layout';
+import Layout from '../components/layout'
+
 
 let qs = [
     {question: "National Anthem", options: {placeholder: "H:M"}}, 
@@ -20,10 +22,12 @@ const Home = () => (
         <div className="container mt-3">
             <div className="row">
                 <div className="col-3">
-                    <div id="form-sidebar" className="flex-column list-group">
-                        {qs.map(q => (
-                            <a className="list-group-item list-group-item-action" href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{q.question}</a>
-                        ))}
+                    <div id="form-sidebar" className="flex-column list-group" style={{position: "sticky", top: "75px"}}>
+                        <Scrollspy items={ [...qs, {question: "Score"}, {question: "Yards"}].map(q => `${q.question.toLowerCase().replace(/( |\W)/g, '')}`) } currentClassName="active">
+                            {[...qs, {question: "Score"}, {question: "Yards"}].map(q => (
+                                <a className="list-group-item list-group-item-action" href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{q.question}</a>
+                            ))}
+                        </Scrollspy>
                     </div>
                 </div>
                 <div className="col">
