@@ -8,7 +8,7 @@ const Scores = (props) => {
             [props.formData[t][q].score, props.formData[t][q].setScore] = useState();
         })
     });
-    return <Card id={"scores"} title="Score">
+    return <Card id={"score"} title="Score">
         <div className="form-row" >
             <div className="col">
             </div>
