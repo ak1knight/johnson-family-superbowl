@@ -1,6 +1,6 @@
 import data from '../data'
-import { teams, periodNames } from './entryform'
 import { useState, useEffect } from 'react';
+import { teams, periodNames } from "../data/formdata";
 
 function formatScore(entry, quarter) {
     const firstTeamScore = entry[teams[0]][quarter].score;

@@ -3,15 +3,15 @@ import { useRouter } from "next/router";
 import Card from "./card";
 import Scores from './scores';
 import Yards from './yards';
+import { teams, periodNames } from "../data/formdata";
 
-export const periodNames = ["Quarter 1", "Quarter 2", "Quarter 3", "Final"];
-export const teams = ["Ravens", "49ers"];
+
 let formData = {};
 
 teams.forEach(t => {
-    formData[t] = { yards: '' }
+    formData[t.name] = { yards: '' }
     periodNames.forEach(q => {
-        formData[t][q] = { score: '' }
+        formData[t.name][q] = { score: '' }
     })
 });
 
@@ -40,8 +40,10 @@ const EntryForm = (props) => {
                 <div className="row">
                     {q.options.map((option, index) => 
                         <div className="col-6" key={index} >
-                            <input type="button" value={option.name + ' - ' + option.score} name={option.name} 
-                                className={`btn btn-block ${q.response == option.name ? "btn-primary border-primary" : "btn-light"} border mt-2`} onClick={(e) => q.setResponse(e.target.name)}/>
+                            <button type="button" name={option.name} className={`btn btn-block ${q.response == option.name ? "btn-primary border-primary" : "btn-light"} border mt-2 d-flex justify-content-between align-items-center`} onClick={(e) => q.setResponse(e.target.name)}>
+                                {!!option.image && <img src={option.image} class="img-fluid w-25"></img>}
+                                <div className="text-center mx-auto">{option.name + ' - ' + option.score}</div>
+                            </button>
                         </div>
                     )}
                 </div> :
