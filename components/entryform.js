@@ -35,13 +35,13 @@ const EntryForm = (props) => {
     return <form data-spy="scroll" data-target="#form-sidebar" data-offset="0" onSubmit={handleSubmit}>
         <Scores formData={formData} />
         <Yards formData={formData} />
-        {props.questions.map(q => <Card id={`${q.question.toLowerCase().replace(/( |\W)/g, '')}`} title={q.question} extrainfo={q.extrainfo} >
+        {props.questions.map((q, i) => <Card key={i} id={`${q.question.toLowerCase().replace(/( |\W)/g, '')}`} title={q.question} extrainfo={q.extrainfo} >
             { !!q.options ? 
                 <div className="row">
                     {q.options.map((option, index) => 
                         <div className="col-6" key={index} >
-                            <button type="button" name={option.name} className={`btn btn-block ${q.response == option.name ? "btn-primary border-primary" : "btn-light"} border mt-2 d-flex justify-content-between align-items-center`} onClick={(e) => q.setResponse(e.target.name)}>
-                                {!!option.image && <img src={option.image} class="img-fluid w-25"></img>}
+                            <button type="button" name={option.name} className={`btn btn-block ${q.response == option.name ? "btn-primary border-primary" : "btn-light"} border mt-2 d-flex justify-content-between align-items-center`} onClick={() => q.setResponse(option.name)}>
+                                {!!option.image && <img src={option.image} className="img-fluid w-25"></img>}
                                 <div className="text-center mx-auto">{option.name + ' - ' + option.score}</div>
                             </button>
                         </div>

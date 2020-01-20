@@ -4,7 +4,7 @@ import {useRouter} from "next/router";
 
 const Nav = () => {
     const router = useRouter();
-    return <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+    return <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container">
             <a className="navbar-brand mb-0 h1" href="#">Johnson Family Super Bowl Pool</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

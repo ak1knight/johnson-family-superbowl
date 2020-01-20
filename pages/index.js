@@ -17,10 +17,10 @@ const Home = () => (
         <div className="container mt-3">
             <div className="row">
                 <div className="col-3">
-                    <div id="form-sidebar" className="flex-column list-group" style={{position: "sticky", top: "75px"}}>
+                    <div id="form-sidebar" className="flex-column list-group" style={{position: "sticky", top: "10px"}}>
                         <Scrollspy items={ [{question: "Score"}, {question: "Yards"}, ...questions].map(q => `${q.question.toLowerCase().replace(/( |\W)/g, '')}`) } currentClassName="active">
-                            {[{question: "Score"}, {question: "Yards"}, ...questions].map(q => (
-                                <a className="list-group-item list-group-item-action" href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{!!q.short ? q.short : q.question}</a>
+                            {[{question: "Score"}, {question: "Yards"}, ...questions].map((q, i) => (
+                                <a className="list-group-item list-group-item-action" key={i} href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{!!q.short ? q.short : q.question}</a>
                             ))}
                         </Scrollspy>
                     </div>
