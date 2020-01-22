@@ -2,11 +2,15 @@ import React, { useState } from "react"
 import Card from "./card"
 import { teams } from "../data/formdata";
 
+const extrainfo = `
+Both Kansas City and San Francisco averaged right around 380 yards per game on offense during the regular season. However, the 49ers only gave up 281 yards per game on defense, which was second best in the NFL, while the Chiefs gave up nearly 350 yards per game.
+`
+
 const Yards = (props) => {
     teams.forEach(t => {
         [props.formData[t.name].yards, props.formData[t.name].setYards] = useState();
     });
-    return <Card id="yards" title="Total Yards" extrainfo="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut orci a magna bibendum cursus. Donec semper diam et dui suscipit, ut blandit purus pharetra. Maecenas vitae est sed nisl finibus dictum. Aliquam maximus risus at turpis mattis, at fermentum lacus fringilla. Nunc lectus erat, aliquet ut mauris vel, consectetur gravida est. Morbi metus arcu, efficitur nec dictum non, porttitor eu nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer lacus neque, mattis et ornare sed, aliquam porttitor mi. Curabitur ut leo tellus.">
+    return <Card id="yards" title="Total Yards" extrainfo={extrainfo}>
         <div className="row" >
             {teams.map((team, i) => (
                 <div key={i} className="col-md">

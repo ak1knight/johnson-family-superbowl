@@ -3,42 +3,42 @@ export const periodNames = ["Quarter 1", "Quarter 2", "Quarter 3", "Final"];
 export const teams = [{name:"Chiefs", icon:"/images/kc.svg"}, {name:"49ers", icon:"/images/sf.svg"}];
 export let questions = [
     {
-        question: "National Anthem",
-        extrainfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut orci a magna bibendum cursus. Donec semper diam et dui suscipit, ut blandit purus pharetra. Maecenas vitae est sed nisl finibus dictum. Aliquam maximus risus at turpis mattis, at fermentum lacus fringilla. Nunc lectus erat, aliquet ut mauris vel, consectetur gravida est. Morbi metus arcu, efficitur nec dictum non, porttitor eu nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer lacus neque, mattis et ornare sed, aliquam porttitor mi. Curabitur ut leo tellus.",
+        question: "How long will it take Demi Lovato to sing the National Anthem?",
+        short: "National Anthem",
+        extrainfo: `Demi Lovato is no stranger to singing the anthem at huge sporting events, you can find many examples on YouTube.
+        Her most recent high-profile anthem performance came during the Conor McGregor-Floyd Mayweather boxing match in 2016, where she took 2:12.
+        She also sang for Game 4 of the 2015 World Series between the New York Mets and Kansas City Royals, where she clocked out at 1:58 and even held the “brave” for a few seconds to milk the clock.
+        The past two super bowls have both gone under 2 minutes.`,
         config: {
-            placeholder: "H:M"
+            placeholder: "M:SS"
         }
     },
     {
-        question: "How old are you?"
-    },
-    {
-        question: "Where do you live?"
+        question: "Will any scoring drive take less time than it takes Demi Lovato to sing the national anthem?", 
+        short: 'Drive vs. Anthem',
+        extrainfo: "Kansas City had 31% of their scoring drives last less than 2:15, while San Francisco had 28%",
+        options: [{ name: "Yes", score: 300 }, { name: "No", score: 100 }]
     },
     {
         question: "What will the opening coin toss land on?", 
-        short: 'Coin Toss', 
-        options: [{ name: "Heads", score: 1 }, { name: "Tails", score: 1 }]
+        short: 'Coin Toss',
+        extrainfo: 'Since the first Super Bowl, HEADS has come up 25 times and TAILS 28. The winner of the Super Bowl has won the coin toss 24 times with HEADS coming up 12 times.',
+        options: [{ name: "Heads", score: 100 }, { name: "Tails", score: 100 }]
     },
     {
-        question: "What will Gladys Knight wear while singing the national anthem?", 
-        short: 'Gladys Knight Wear', 
-        options: [{ name: "Dress or Skirt", score: 1 }, { name: "Pants or shorts", score: 2 }]
+        question: "Which commercial will be shown first, Mountain Dew or Toyota?", 
+        short: 'Mtn. Dew vs Toyota', 
+        options: [{ name: "Mountain Dew", score: 150 }, { name: "Toyota", score: 150 }]
     },
     {
-        question: "What song will Maroon 5 open with during the halftime show?", 
-        short: 'HT Opening Song', 
-        options: [{ name: "One More Night", score: 3 }, { name: "Makes Me Wonder", score: 3 }, { name: "Animals", score: 5 }, { name: "Don't Wanna Know", score: 6 }, { name: "Girls Like You", score: 6 }, { name: "Other", score: 5 }]
+        question: "Which commercial will be shown first, Audi or Porsche?", 
+        short: 'Audi vs Porsche', 
+        options: [{ name: "Audi", score: 150 }, { name: "Porsche", score: 150 }]
     },
     {
-        question: "Will Adam Levine (lead singer for Maroon 5) wear a leather jacket during the halftime show?", 
-        short: 'Adam Levine Leather Jacket', 
-        options: [{ name: "Yes", score: 1 }, { name: "No", score: 2 }]
-    },
-    {
-        question: "What will the last score of the game be?", 
-        short: 'Last Score', 
-        options: [{ name: "Touchdown", score: 1 }, { name: "Field Goal or Safety", score: 2 }]
+        question: "Which commercial will be shown first, Donald Trump or Michael Bloomberg?", 
+        short: 'Trump vs Bloomberg', 
+        options: [{ name: "Trump", score: 150 }, { name: "Bloomberg", score: 150 }]
     },
     {
         question: "What will the the first scoring play of the game be?", 
@@ -46,14 +46,26 @@ export let questions = [
         options: [{ name: "Chiefs Field Goal", score: 2, image:"/images/kc.svg" }, { name: "Chiefs Offensive TD", score: 2, image:"/images/kc.svg" }, { name: "Chiefs Defensive TD", score: 6, image:"/images/kc.svg" }, { name: "49ers Field Goal", score: 2, image:"/images/sf.svg" }, { name: "49ers Offensive TD", score: 2, image:"/images/sf.svg" }, { name: "49ers Defensive TD", score: 6, image:"/images/sf.svg" }]
     },
     {
-        question: "During the first Doritos commercial, what color will the first bag shown be?", 
-        short: 'Doritos Bag Color', 
-        options: [{ name: "Red", score: 1 }, { name: "Blue", score: 1 }, { name: "Purple", score: 2 }, { name: "Yellow", score: 3 }, { name: "Other", score: 2 }]
+        question: "What song will be sung first during the halftime show?", 
+        short: 'HT Opening Song', 
+        options: [
+            { name: "Whenever, Wherever (Shakira)", score: 300, embed: "https://www.youtube.com/embed/weRHyjj34ZE" }, 
+            { name: "Let's Get Loud (J-Lo)", score: 400, embed: "https://www.youtube.com/embed/Q91hydQRGyM" }, 
+            { name: "On The Floor (J-Lo)", score: 500, embed: "https://www.youtube.com/embed/t4H_Zoh7G5A" }, 
+            { name: "Dare (Shakira)", score: 600, embed: "https://www.youtube.com/embed/XkYAxGt-aUs" }, 
+            { name: "Live It Up (J-Lo)", score: 650, embed: "https://www.youtube.com/embed/BofL1AaiTjo" }, 
+            { name: "Other", score: 500 }
+        ]
     },
     {
-        question: "Will the phrase 'Greatest of All Time' be said by Jim Nantz or Tony Romo during the game?", 
-        short: '"Greatest of All Time" Said', 
-        options: [{ name: "Yes", score: 1 }, { name: "No", score: 1 }]
+        question: "Will Pitbull Make an Appearance During the Halftime Show?", 
+        short: 'Pitbull', 
+        options: [{ name: "Yes", score: 100 }, { name: "No", score: 300 }]
+    },
+    {
+        question: "What will the last score of the game be?", 
+        short: 'Last Score', 
+        options: [{ name: "Touchdown", score: 150 }, { name: "Field Goal or Safety", score: 200 }]
     },
     {
         question: "Who will win Super Bowl LIV MVP?", 

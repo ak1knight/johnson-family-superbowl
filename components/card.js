@@ -6,7 +6,7 @@ const Card = (props) => (
         <div className="card-body">
             {props.children}
         </div>
-        {!!props.extrainfo && <div className="card-footer text-muted">
+        {!!props.extrainfo && <div className="card-footer font-weight-light text-muted">
             {props.extrainfo}
         </div>}
     </div>
