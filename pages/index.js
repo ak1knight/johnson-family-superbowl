@@ -16,8 +16,8 @@ const Home = () => (
 
         <div className="container mt-3">
             <div className="row">
-                <div className="col-3">
-                    <div id="form-sidebar" className="flex-column list-group" style={{position: "sticky", top: "10px"}}>
+                <div className="col-3-sm">
+                    <div id="form-sidebar" className="d-none d-md-flex flex-column list-group" style={{position: "sticky", top: "10px"}}>
                         <Scrollspy items={ [{question: "Score"}, {question: "Yards"}, ...questions].map(q => `${q.question.toLowerCase().replace(/( |\W)/g, '')}`) } currentClassName="active">
                             {[{question: "Score"}, {question: "Yards"}, ...questions].map((q, i) => (
                                 <a className="list-group-item list-group-item-action" key={i} href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{!!q.short ? q.short : q.question}</a>
@@ -25,7 +25,7 @@ const Home = () => (
                         </Scrollspy>
                     </div>
                 </div>
-                <div className="col">
+                <div className="col-sm">
                     <EntryForm questions={questions} />
                 </div>
             </div>
