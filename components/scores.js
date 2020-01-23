@@ -8,7 +8,7 @@ For all the firepower on the KC sideline, the 49ers' offense averaged an even be
 const Scores = (props) => {
     teams.forEach(t => {
         periodNames.forEach(q => {
-            [props.formData[t.name][q].score, props.formData[t.name][q].setScore] = useState();
+            [props.formData[t.name][q].score, props.formData[t.name][q].setScore] = useState(props.formData[t.name][q].score || '');
         })
     });
     return <Card id={"score"} title="Score" extrainfo={extrainfo}>

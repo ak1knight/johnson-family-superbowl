@@ -12,14 +12,58 @@ function formatScore(entry, quarter) {
 
 const BigBoardTable = () => {
     const [entries, setEntries] = useState();
+    const [winningEntry, setWinningEntry] = useState();
+    const [winningNumbers, setWinningNumbers] = useState(); 
+    
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch('/api/entry');
-            setEntries(await response.json());
+            const [entryResponse, winningEntryResponse] = await Promise.all([fetch('/api/entry'), fetch('/api/winningentry')]);
+            setEntries(await entryResponse.json());
+            setWinningEntry(await winningEntryResponse.json());
         }
 
         fetchData();
     }, []);
+
+    console.log(winningEntry);
+
+    useEffect(() => {
+        let wn = {};
+
+        if (!winningEntry) {
+            return
+        }
+
+        periodNames.forEach(period => {
+            if (!!winningEntry.entry[teams[0].name][period]) {
+                wn[period] = Math.min(...entries.map((e) => Math.abs(e.entry[teams[0].name][period].score - winningEntry.entry[teams[0].name][period].score) + Math.abs(e.entry[teams[1].name][period].score - winningEntry.entry[teams[1].name][period].score)));
+            }
+        });
+    
+        teams.forEach(team => {
+            if (winningEntry.entry[team.name].yards) {
+                wn[team.name] = Math.min(...entries.map(e => Math.abs(e.entry[team.name].yards - winningEntry.entry[team.name].yards)));
+            }
+        })
+    
+        // if (winningEntry.anthemLength) {
+        //     winningNumbers.anthemLength = Math.min(...entries.map(entry => Math.abs(entry.anthemLength - winningEntry.anthemLength)));
+        // }
+        
+        setWinningNumbers(wn);
+    }, [winningEntry])
+
+    function checkWinningScore(entry, period) {
+        return !!winningNumbers && !!winningEntry && !!winningEntry.entry[teams[0].name][period] && Math.abs(entry[teams[0].name][period].score - winningEntry.entry[teams[0].name][period].score) + Math.abs(entry[teams[1].name][period].score - winningEntry.entry[teams[1].name][period].score) == winningNumbers[period];
+    }
+
+    function checkWinningYards(entry, team) {
+        return !!winningNumbers && !!winningEntry && Math.abs(entry[team].yards - winningEntry.entry[team].yards) == winningNumbers[team];
+    }
+
+    function checkWinningAnthemTime() {
+        return Math.abs(anthemLength - winningEntry.anthemLength) == winningNumbers.anthemLength;
+    }
 
     return <table className="table table-sm border-top-0">
         <thead>
@@ -35,8 +79,8 @@ const BigBoardTable = () => {
                 <tr key={e.id}>
                     <th scope="row">{e.entry.name}</th>
                     <td>{e.entry[0].response}</td>
-                    {periodNames.map((q, i) => <td key={i}>{formatScore(e.entry, q)}</td>)}
-                    {teams.map((t, i) => <td key={i}>{e.entry[t.name].yards}</td>)}
+                    {periodNames.map((q, i) => <td className={checkWinningScore(e.entry, q) ? 'bg-light text-success border border-success' : ''} key={i}>{formatScore(e.entry, q)}</td>)}
+                    {teams.map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-light text-success border border-success' : ''} key={i}>{e.entry[t.name].yards}</td>)}
                 </tr>
             )) :
             <tr>

@@ -19,12 +19,14 @@ const EntryForm = (props) => {
     const router = useRouter();
     let [name, setName] = useState(props.name);
     props.questions.forEach(q => [q.response, q.setResponse] = useState());
-    formData = { ...formData, ...props.questions };
+    formData = props.entry || { ...formData, ...props.questions };
+
+    console.log(props.entry);
 
     const handleSubmit = async event => {
         event.preventDefault();
 
-        await fetch("/api/entry/new", {
+        await fetch(props.endpoint || "/api/entry/new", {
             method: "POST",
             body: JSON.stringify({ entry: {...formData, name} })
         });
@@ -33,8 +35,8 @@ const EntryForm = (props) => {
     };
 
     return <form data-spy="scroll" data-target="#form-sidebar" data-offset="0" onSubmit={handleSubmit}>
-        <Scores formData={formData} />
-        <Yards formData={formData} />
+        <Scores formData={ formData } />
+        <Yards formData={ formData } />
         {props.questions.map((q, i) => <Card key={i} id={`${q.question.toLowerCase().replace(/( |\W)/g, '')}`} title={q.question} extrainfo={q.extrainfo} >
             { !!q.options ? 
                 <div className="row">

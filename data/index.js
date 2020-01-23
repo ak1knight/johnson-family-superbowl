@@ -49,5 +49,30 @@ module.exports = {
                 }
             })
             .promise();
+    },
+    createWinningEntry: async entry => {
+        const client = getDynamoDBClient();
+
+        await client.update({
+            TableName: "WinningEntry",
+            Key: {
+                id: '1'
+            },
+            UpdateExpression: "set entry = :e",
+            ExpressionAttributeValues:{
+                ":e": entry
+            }
+        }).promise();
+    },
+    getWinningEntry: async () => {
+        const { Item } = await getDynamoDBClient()
+            .get({
+                TableName: "WinningEntry",
+                Key: {
+                    id: '1'
+                }
+            }).promise();
+
+        return Item;
     }
 };

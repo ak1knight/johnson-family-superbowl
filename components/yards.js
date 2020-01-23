@@ -8,7 +8,7 @@ Both Kansas City and San Francisco averaged right around 380 yards per game on o
 
 const Yards = (props) => {
     teams.forEach(t => {
-        [props.formData[t.name].yards, props.formData[t.name].setYards] = useState();
+        [props.formData[t.name].yards, props.formData[t.name].setYards] = useState(props.formData[t.name].yards || '');
     });
     return <Card id="yards" title="Total Yards" extrainfo={extrainfo}>
         <div className="row" >
