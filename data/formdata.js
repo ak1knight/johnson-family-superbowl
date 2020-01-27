@@ -43,7 +43,13 @@ export let questions = [
     {
         question: "What will the the first scoring play of the game be?", 
         short: 'First Scoring Play', 
-        options: [{ name: "Chiefs Field Goal", score: 2, image:"/images/kc.svg" }, { name: "Chiefs Offensive TD", score: 2, image:"/images/kc.svg" }, { name: "Chiefs Defensive TD", score: 6, image:"/images/kc.svg" }, { name: "49ers Field Goal", score: 2, image:"/images/sf.svg" }, { name: "49ers Offensive TD", score: 2, image:"/images/sf.svg" }, { name: "49ers Defensive TD", score: 6, image:"/images/sf.svg" }]
+        options: [{ name: "Chiefs Field Goal", score: 200, image:"/images/kc.svg" }, { name: "Chiefs Offensive TD", score: 200, image:"/images/kc.svg" }, { name: "Chiefs Defensive TD", score: 600, image:"/images/kc.svg" }, { name: "49ers Field Goal", score: 200, image:"/images/sf.svg" }, { name: "49ers Offensive TD", score: 200, image:"/images/sf.svg" }, { name: "49ers Defensive TD", score: 600, image:"/images/sf.svg" }]
+    },
+    {
+        question: "Which will be higher?", 
+        short: 'James Harden', 
+        extrainfo: 'James Harden has averaged 36 points per game for the Houston Rockets so far this season. San Francisco has avaraged 15 points per half, while Kansas City has averaged 14.',
+        options: [{ name: "James Harden Total Points vs the New Orleans Pelicans", score: 100 }, { name: "Total points scored in the first half by both teams", score: 300 }]
     },
     {
         question: "What song will be sung first during the halftime show?", 
