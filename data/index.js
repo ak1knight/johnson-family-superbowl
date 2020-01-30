@@ -39,6 +39,20 @@ module.exports = {
 
         return entry;
     },
+    updateEntry: async (entryId, entry) => {
+        const client = getDynamoDBClient();
+
+        await client.update({
+            TableName: "SuperBowlEntries",
+            Key: {
+                id: entryId
+            },
+            UpdateExpression: "set entry = :e",
+            ExpressionAttributeValues:{
+                ":e": entry
+            }
+        }).promise();
+    },
     createEntry: async entry => {
         await getDynamoDBClient()
             .put({

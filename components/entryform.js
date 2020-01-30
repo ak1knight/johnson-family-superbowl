@@ -17,8 +17,8 @@ teams.forEach(t => {
 
 const EntryForm = (props) => {
     const router = useRouter();
-    let [name, setName] = useState(props.name);
-    props.questions.forEach(q => [q.response, q.setResponse] = useState());
+    let [name, setName] = useState(!!props.entry ? props.entry.name : '');
+    props.questions.forEach((q, i) => [q.response, q.setResponse] = useState(q.response));
     formData = props.entry || { ...formData, ...props.questions };
 
     console.log(props.entry);
