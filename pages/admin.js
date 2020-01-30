@@ -23,7 +23,7 @@ const Admin = () => {
     return <Layout>
         <div className="jumbotron jumbotron-fluid bg-danger text-white">
             <div className="container">
-                <h1 className="display-4">Entry Form</h1>
+                <h1 className="display-4">Set Winning Entry</h1>
             </div>
         </div>
 

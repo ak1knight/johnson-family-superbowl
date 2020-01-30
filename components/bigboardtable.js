@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { teams, periodNames } from "../data/formdata";
 
 function formatScore(entry, quarter) {
-    const firstTeamScore = entry[teams[0].name][quarter].score;
-    const secondTeamScore = entry[teams[1].name][quarter].score
+    const firstTeamScore = parseInt(entry[teams[0].name][quarter].score);
+    const secondTeamScore = parseInt(entry[teams[1].name][quarter].score);
     return firstTeamScore == secondTeamScore ? `${firstTeamScore} - ${secondTeamScore} Tie` 
                 : firstTeamScore > secondTeamScore ? `${firstTeamScore} - ${secondTeamScore} ${teams[0].name}` 
                 : `${secondTeamScore} - ${firstTeamScore} ${teams[1].name}`
