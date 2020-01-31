@@ -35,7 +35,7 @@ const BigBoardTable = () => {
         }
 
         periodNames.forEach(period => {
-            if (!!winningEntry.entry[teams[0].name][period]) {
+            if (!!winningEntry.entry[teams[0].name][period] && !!winningEntry.entry[teams[0].name][period].score) {
                 wn[period] = Math.min(...entries.map((e) => Math.abs(e.entry[teams[0].name][period].score - winningEntry.entry[teams[0].name][period].score) + Math.abs(e.entry[teams[1].name][period].score - winningEntry.entry[teams[1].name][period].score)));
             }
         });
