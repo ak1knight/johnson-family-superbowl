@@ -35,7 +35,7 @@ const PropBetBoardTable = () => {
                 <tr key={e.id}>
                     <th scope="row">{e.entry.name}</th>
                     {questions.slice(1).map((q, i) => <td className={!!winningEntry && !!winningEntry.entry[i + 1] && e.entry[i + 1].response == winningEntry.entry[i + 1].response ? 'bg-light text-success border border-success' : ''} key={i}>{e.entry[i + 1].response}</td>)}
-                    <td>0</td>
+                    <td>{questions.slice(1).map((q, i) => !!winningEntry && !!winningEntry.entry[i + 1] && e.entry[i + 1].response == winningEntry.entry[i + 1].response ? q.options.find(o => o.name == winningEntry.entry[i + 1].response).score : 0).reduce((a,b) => a + b, 0)}</td>
                 </tr>
             )) :
             <tr>
