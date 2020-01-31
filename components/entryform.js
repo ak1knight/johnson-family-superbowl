@@ -21,8 +21,6 @@ const EntryForm = (props) => {
     props.questions.forEach((q, i) => [q.response, q.setResponse] = useState(q.response));
     formData = props.entry || { ...formData, ...props.questions };
 
-    console.log(props.entry);
-
     const handleSubmit = async event => {
         event.preventDefault();
 

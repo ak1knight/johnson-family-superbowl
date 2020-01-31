@@ -18,7 +18,9 @@ const Admin = () => {
         fetchData();
     }, []);
 
-    console.log(currentAdminEntry);
+    let questions = !!currentAdminEntry && Object.entries(currentAdminEntry.entry)
+        .filter(([key]) => !isNaN(parseFloat(key)) && isFinite(key))
+        .map(([, value]) => value);
 
     return <Layout>
         <div className="jumbotron jumbotron-fluid bg-danger text-white">
@@ -34,8 +36,6 @@ const Admin = () => {
                 </div>
             </div>
         </div>
-
-        
     </Layout>
 }
 
