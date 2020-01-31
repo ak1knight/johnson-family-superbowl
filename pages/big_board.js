@@ -14,7 +14,9 @@ const BigBoard = () => {
         </div>
         <div className="container mt-3">
             <Card>
-                <BigBoardTable />
+                <div className="table-responsive">
+                    <BigBoardTable />
+                </div>
             </Card>
         </div>
     </Layout>

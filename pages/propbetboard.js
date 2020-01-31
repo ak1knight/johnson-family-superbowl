@@ -13,7 +13,9 @@ const PropBetBoard = () => {
         </div>
         <div className="container mt-3">
             <Card>
-                <PropBetBoardTable />
+                <div className="table-responsive">
+                    <PropBetBoardTable />
+                </div>
             </Card>
         </div>
     </Layout>
