@@ -22,20 +22,29 @@ const PropBetBoardTable = () => {
         return !!winningNumbers && !!winningEntry && !!winningEntry.entry[teams[0].name][period] && Math.abs(entry[teams[0].name][period].score - winningEntry.entry[teams[0].name][period].score) + Math.abs(entry[teams[1].name][period].score - winningEntry.entry[teams[1].name][period].score) == winningNumbers[period];
     }
 
+    if (!!entries) {
+        entries.sort((e1, e2) => 
+            questions.slice(1).map((q, i) => !!winningEntry && !!winningEntry.entry[i + 1] && e2.entry[i + 1].response == winningEntry.entry[i + 1].response ? q.options.find(o => o.name == winningEntry.entry[i + 1].response).score : 0).reduce((a,b) => a + b, 0) -
+            questions.slice(1).map((q, i) => !!winningEntry && !!winningEntry.entry[i + 1] && e1.entry[i + 1].response == winningEntry.entry[i + 1].response ? q.options.find(o => o.name == winningEntry.entry[i + 1].response).score : 0).reduce((a,b) => a + b, 0)
+        )
+    }
+
     return <table className="table table-sm border-top-0">
         <thead>
             <tr>
+                <th className="border-top-0" scope="col"></th>
                 <th className="border-top-0" scope="col">Name</th>
                 {!!questions && questions.slice(1).map((q, i) => <th key={i} className="border-top-0" scope="col">{q.short}</th>)}
                 <th className="border-top-0" scope="col">Total</th>
             </tr>
         </thead>
         <tbody>
-            {!!entries ? entries.map(e => (
-                <tr key={e.id}>
+            {!!entries ? entries.map((e, rank) => (
+                <tr key={e.id} style={rank < 5 ? {backgroundColor: `rgb(${193 + (rank * (62 / 5))},${226 + (rank * (29 / 5))},${255 + (rank * (0 / 5))})`} : {}}>
+                    <th scope="row">{rank + 1}</th>
                     <th scope="row">{e.entry.name}</th>
-                    {questions.slice(1).map((q, i) => <td className={!!winningEntry && !!winningEntry.entry[i + 1] && e.entry[i + 1].response == winningEntry.entry[i + 1].response ? 'bg-light text-success border border-success' : ''} key={i}>{e.entry[i + 1].response}</td>)}
-                    <td>{questions.slice(1).map((q, i) => !!winningEntry && !!winningEntry.entry[i + 1] && e.entry[i + 1].response == winningEntry.entry[i + 1].response ? q.options.find(o => o.name == winningEntry.entry[i + 1].response).score : 0).reduce((a,b) => a + b, 0)}</td>
+                    {questions.slice(1).map((q, i) => <td className={!!winningEntry && !!winningEntry.entry[i + 1] && e.entry[i + 1].response == winningEntry.entry[i + 1].response ? 'text-success font-weight-bold' : ''} key={i}>{e.entry[i + 1].response}</td>)}
+                    <td className="font-weight-bold">{questions.slice(1).map((q, i) => !!winningEntry && !!winningEntry.entry[i + 1] && e.entry[i + 1].response == winningEntry.entry[i + 1].response ? q.options.find(o => o.name == winningEntry.entry[i + 1].response).score : 0).reduce((a,b) => a + b, 0)}</td>
                 </tr>
             )) :
             <tr>
