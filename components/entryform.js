@@ -23,6 +23,11 @@ const EntryForm = (props) => {
 
     const handleSubmit = async event => {
         event.preventDefault();
+        console.log(!props.isAdmin );
+        if (!props.isAdmin && ( !name || props.questions.some(q => !q.response) || teams.some(t => !formData[t.name].yards || periodNames.some(p => formData[t.name][p].score !== '0' && !formData[t.name][p].score)))) {
+            alert('Please respond to all questions before submitting');
+            return
+        }
 
         await fetch(props.endpoint || "/api/entry/new", {
             method: "POST",

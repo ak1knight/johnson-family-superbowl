@@ -32,7 +32,7 @@ const Admin = () => {
         <div className="container mt-3">
             <div className="row">
                 <div className="col-md-8">
-                    {!!currentAdminEntry && <EntryForm questions={questions} endpoint="/api/winningentry/new" entry={currentAdminEntry.entry} />}
+                    {!!currentAdminEntry && <EntryForm questions={questions} endpoint="/api/winningentry/new" entry={currentAdminEntry.entry} isAdmin={true} />}
                 </div>
             </div>
         </div>
