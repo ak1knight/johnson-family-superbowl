@@ -2,12 +2,14 @@ import data from '../data'
 import { useState, useEffect } from 'react';
 import { teams, periodNames } from "../data/formdata";
 
-function formatScore(entry, quarter) {
-    const firstTeamScore = parseInt(entry[teams[0].name][quarter].score);
-    const secondTeamScore = parseInt(entry[teams[1].name][quarter].score);
+function formatScore(entry, quarter, year) {
+    if (!entry[teams[year][0].name] || !entry[teams[year][1].name])
+        return
+    const firstTeamScore = parseInt(entry[teams[year][0].name][quarter].score);
+    const secondTeamScore = parseInt(entry[teams[year][1].name][quarter].score);
     return firstTeamScore == secondTeamScore ? `${firstTeamScore} - ${secondTeamScore} Tie`
-        : firstTeamScore > secondTeamScore ? `${firstTeamScore} - ${secondTeamScore} ${teams[0].name}`
-            : `${secondTeamScore} - ${firstTeamScore} ${teams[1].name}`
+        : firstTeamScore > secondTeamScore ? `${firstTeamScore} - ${secondTeamScore} ${teams[year][0].name}`
+            : `${secondTeamScore} - ${firstTeamScore} ${teams[year][1].name}`
 }
 
 function toSeconds(str) {
@@ -20,37 +22,39 @@ function toSeconds(str) {
     }
 }
 
-const BigBoardTable = () => {
+const BigBoardTable = ({year}) => {
     const [entries, setEntries] = useState();
     const [winningEntry, setWinningEntry] = useState();
     const [winningNumbers, setWinningNumbers] = useState();
 
     useEffect(() => {
+        setEntries(null)
+        setWinningEntry(null)
+
         async function fetchData() {
-            const [entryResponse, winningEntryResponse] = await Promise.all([fetch('/api/entry'), fetch('/api/winningentry')]);
+            const [entryResponse, winningEntryResponse] = await Promise.all([fetch(`/api/entry/${year}`), fetch(`/api/winningentry/${year}`)]);
             setEntries(await entryResponse.json());
             setWinningEntry(await winningEntryResponse.json());
         }
 
         fetchData();
-    }, []);
-
-    console.log(winningEntry);
+    }, [year]);
 
     useEffect(() => {
         let wn = {};
+        setWinningNumbers(null);
 
-        if (!winningEntry) {
+        if (!winningEntry || Object.keys(winningEntry.entry).length === 0 || !winningEntry.entry[teams[year][0].name]) {
             return
         }
 
         periodNames.forEach(period => {
-            if (!!winningEntry.entry[teams[0].name][period] && !!winningEntry.entry[teams[0].name][period].score) {
-                wn[period] = Math.min(...entries.map((e) => Math.abs(e.entry[teams[0].name][period].score - winningEntry.entry[teams[0].name][period].score) + Math.abs(e.entry[teams[1].name][period].score - winningEntry.entry[teams[1].name][period].score)));
+            if (!!winningEntry.entry[teams[year][0].name][period] && !!winningEntry.entry[teams[year][0].name][period].score) {
+                wn[period] = Math.min(...entries.map((e) => Math.abs(e.entry[teams[year][0].name][period].score - winningEntry.entry[teams[year][0].name][period].score) + Math.abs(e.entry[teams[year][1].name][period].score - winningEntry.entry[teams[year][1].name][period].score)));
             }
         });
 
-        teams.forEach(team => {
+        teams[year].forEach(team => {
             if (winningEntry.entry[team.name].yards) {
                 wn[team.name] = Math.min(...entries.map(e => Math.abs(e.entry[team.name].yards - winningEntry.entry[team.name].yards)));
             }
@@ -64,33 +68,33 @@ const BigBoardTable = () => {
     }, [winningEntry])
 
     function checkWinningScore(entry, period) {
-        return !!winningNumbers && !!winningEntry && !!winningEntry.entry[teams[0].name][period] && Math.abs(entry[teams[0].name][period].score - winningEntry.entry[teams[0].name][period].score) + Math.abs(entry[teams[1].name][period].score - winningEntry.entry[teams[1].name][period].score) == winningNumbers[period];
+        return !!winningNumbers && !!winningEntry && !!winningEntry.entry[teams[year][0].name] && !!winningEntry.entry[teams[year][1].name] && !!winningEntry.entry[teams[year][0].name][period] && Math.abs(entry[teams[year][0].name][period].score - winningEntry.entry[teams[year][0].name][period].score) + Math.abs(entry[teams[year][1].name][period].score - winningEntry.entry[teams[year][1].name][period].score) == winningNumbers[period];
     }
 
     function checkWinningYards(entry, team) {
-        return !!winningNumbers && !!winningEntry && Math.abs(entry[team].yards - winningEntry.entry[team].yards) == winningNumbers[team];
+        return !!winningNumbers && !!winningEntry && !!winningEntry.entry[team] && Math.abs(entry[team].yards - winningEntry.entry[team].yards) == winningNumbers[team];
     }
 
     function checkWinningAnthemTime(entry) {
         return !!winningNumbers && !!winningEntry && !!winningEntry.entry[0].response && Math.abs(toSeconds(entry[0].response) - toSeconds(winningEntry.entry[0].response)) == winningNumbers.anthemLength;
     }
 
-    return <table className="table table-sm border-top-0">
+    return <table className="table table-sm border-top-0" style={{width: "calc(100% - 2px)"}}>
         <thead>
             <tr>
                 <th className="border-top-0" scope="col">Name</th>
-                <th className="border-top-0" scope="col">Anthem Time</th>
-                {!!periodNames && periodNames.map((q, i) => <th key={i} className="border-top-0" scope="col">{`${q} Score`}</th>)}
-                {!!teams && teams.map((t, i) => <th key={i} className="border-top-0" scope="col">{`${t.name} Yards`}</th>)}
+                <th className="border-top-0 text-center" scope="col">Anthem Time</th>
+                {!!periodNames && periodNames.map((q, i) => <th key={i} className="border-top-0 text-center" scope="col">{`${q} Score`}</th>)}
+                {!!teams[year] && teams[year].map((t, i) => <th key={i} className="border-top-0 text-center" scope="col">{`${t.name} Yards`}</th>)}
             </tr>
         </thead>
         <tbody>
             {!!entries ? entries.map(e => (
                 <tr key={e.id}>
                     <th scope="row">{e.entry.name}</th>
-                    <td className={checkWinningAnthemTime(e.entry) ? 'bg-light text-success border border-success' : ''} >{e.entry[0].response}</td>
-                    {periodNames.map((q, i) => <td className={checkWinningScore(e.entry, q) ? 'bg-light text-success border border-success' : ''} key={i}>{formatScore(e.entry, q)}</td>)}
-                    {teams.map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-light text-success border border-success' : ''} key={i}>{e.entry[t.name].yards}</td>)}
+                    <td className={checkWinningAnthemTime(e.entry) ? 'bg-light text-success border border-success text-center' : 'text-center'} >{e.entry[0].response}</td>
+                    {periodNames.map((q, i) => <td className={checkWinningScore(e.entry, q) ? 'bg-light text-success border border-success text-center' : 'text-center'} key={i}>{formatScore(e.entry, q, year)}</td>)}
+                    {teams[year].map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-light text-success border border-success text-center' : 'text-center'} key={i}>{e.entry[t.name]?.yards}</td>)}
                 </tr>
             )) :
                 <tr>

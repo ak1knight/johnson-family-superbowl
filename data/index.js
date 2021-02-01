@@ -71,13 +71,13 @@ module.exports = {
             })
             .promise();
     },
-    createWinningEntry: async entry => {
+    createWinningEntry: async (entry, year) => {
         const client = getDynamoDBClient();
 
         await client.update({
             TableName: "WinningEntry",
             Key: {
-                id: '1'
+                id: String(year - 2019)
             },
             UpdateExpression: "set entry = :e",
             ExpressionAttributeValues:{
@@ -85,12 +85,13 @@ module.exports = {
             }
         }).promise();
     },
-    getWinningEntry: async () => {
+    getWinningEntry: async (year) => {
+        console.log(year)
         const { Item } = await getDynamoDBClient()
             .get({
                 TableName: "WinningEntry",
                 Key: {
-                    id: '1'
+                    id: String(year - 2019)
                 }
             }).promise();
 

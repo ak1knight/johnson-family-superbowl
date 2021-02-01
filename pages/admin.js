@@ -9,7 +9,7 @@ const Admin = () => {
     let [currentAdminEntry, setCurrentAdminEntry] = useState();
     useEffect(() => {
         async function fetchData() {
-            const winningEntryResponse = await fetch('/api/winningentry');
+            const winningEntryResponse = await fetch('/api/winningentry/2021');
             let test = await winningEntryResponse.json()
             console.log(test);
             setCurrentAdminEntry(test);
@@ -32,7 +32,7 @@ const Admin = () => {
         <div className="container mt-3">
             <div className="row">
                 <div className="col-md-8">
-                    {!!currentAdminEntry && <EntryForm questions={questions} endpoint="/api/winningentry/new" entry={currentAdminEntry.entry} isAdmin={true} />}
+                    {!!currentAdminEntry && <EntryForm questions={questions} endpoint="/api/winningentry/new/2021" entry={currentAdminEntry.entry} isAdmin={true} />}
                 </div>
             </div>
         </div>
