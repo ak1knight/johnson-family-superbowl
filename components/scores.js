@@ -6,7 +6,7 @@ const extrainfo = `Kansas City has one of the most explosive offenses in the NFL
 For all the firepower on the KC sideline, the 49ers' offense averaged an even better 29.9 points per game. San Francisco gets it done primarily on the ground, rather than through the air, with a stable of running backs headlined by Raheem Mostert and Tevin Coleman.`
 
 const Scores = (props) => {
-    teams.forEach(t => {
+    teams[props.year].forEach(t => {
         periodNames.forEach(q => {
             [props.formData[t.name][q].score, props.formData[t.name][q].setScore] = useState(props.formData[t.name][q].score || '');
         })
@@ -21,7 +21,7 @@ const Scores = (props) => {
                 </div>
             ))}
         </div>
-        {teams.map((team, i) => (
+        {teams[props.year].map((team, i) => (
             <div key={i} className="form-row" >
                 <div className="col mb-2">
                     <h4>{team.name} {!!team.icon && <img style={{width:"1em", height:"1em", verticalAlign: "middle"}} src={team.icon} />}</h4>

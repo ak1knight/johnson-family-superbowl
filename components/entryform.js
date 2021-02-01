@@ -8,16 +8,35 @@ import { teams, periodNames } from "../data/formdata";
 
 let formData = {};
 
-teams.forEach(t => {
+teams[2021].forEach(t => {
     formData[t.name] = { yards: '' }
     periodNames.forEach(q => {
         formData[t.name][q] = { score: '' }
     })
 });
 
+
 const EntryForm = (props) => {
     const router = useRouter();
     let [name, setName] = useState(!!props.entry ? props.entry.name : '');
+    //const [formData, setFormData] = useState(props.entry)
+    const {year} = props
+
+    // React.useEffect(() => {
+    //     console.log("boom");
+    //     let newFormData = {}
+    //     teams[year].forEach(t => {
+    //         newFormData[t.name] = { yards: '' }
+    //         periodNames.forEach(q => {
+    //             newFormData[t.name][q] = { score: '' }
+    //         })
+    //     });
+
+    //     setFormData({ ...newFormData, ...props.questions })
+    //   }, [year]);
+    // if (!formData) {
+        
+    // }
     props.questions.forEach((q, i) => [q.response, q.setResponse] = useState(q.response));
     formData = props.entry || { ...formData, ...props.questions };
 
@@ -37,9 +56,11 @@ const EntryForm = (props) => {
         router.push("/big_board");
     };
 
+    console.log(year)
+
     return <form data-spy="scroll" data-target="#form-sidebar" data-offset="0" onSubmit={handleSubmit}>
-        <Scores formData={ formData } />
-        <Yards formData={ formData } />
+        <Scores formData={ formData } year={ year } />
+        <Yards formData={ formData } year={ year } />
         {props.questions.map((q, i) => <Card key={i} id={`${q.question.toLowerCase().replace(/( |\W)/g, '')}`} title={q.question} extrainfo={q.extrainfo} >
             { !!q.options ? 
                 <div className="row">

@@ -19,10 +19,14 @@ const getDynamoDBClient = () => {
 };
 
 module.exports = {
-    readEntries: async () => {
+    readEntries: async (year) => {
         const { Items } = await getDynamoDBClient()
             .scan({
-                TableName: "SuperBowlEntries"
+                TableName: "SuperBowlEntries",
+                FilterExpression: "yearKey = :y",
+                ExpressionAttributeValues: {
+                    ":y": year
+                }
             })
             .promise();
 
@@ -31,11 +35,14 @@ module.exports = {
     getEntry: async entryId => {
         const { Items } = await getDynamoDBClient()
             .scan({
-                TableName: "SuperBowlEntries"
+                TableName: "SuperBowlEntries",
+                Key: {
+                    "id": entryId
+                }
             })
             .promise();
 
-        const entry = Items.find(entry => entry.id == entryId);
+        //const entry = Items.find(entry => entry.id == entryId);
 
         return entry;
     },
