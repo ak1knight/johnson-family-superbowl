@@ -44,7 +44,7 @@ export let questions = {
         {
             question: "What will the the first scoring play of the game be?",
             short: 'First Scoring Play',
-            options: [{ name: "Chiefs Field Goal", score: 200, image: "/images/kc.svg" }, { name: "Chiefs Offensive TD", score: 200, image: "/images/kc.svg" }, { name: "Chiefs Defensive TD", score: 600, image: "/images/kc.svg" }, { name: "Buccaneers Field Goal", score: 200, image: "/images/tb.svg" }, { name: "Buccaneers Offensive TD", score: 200, image: "/images/tb.svg" }, { name: "Buccaneers Defensive TD", score: 600, image: "/images/tb.svg" }]
+            options: [{ name: "Chiefs Field Goal", score: 200, image: "/images/kc.svg" }, { name: "Chiefs Offensive TD", score: 200, image: "/images/kc.svg" }, { name: "Chiefs Defensive TD", score: 600, image: "/images/kc.svg" }, { name: "49ers Field Goal", score: 200, image: "/images/sf.svg" }, { name: "49ers Offensive TD", score: 200, image: "/images/sf.svg" }, { name: "49ers Defensive TD", score: 600, image: "/images/sf.svg" }]
         },
         {
             question: "Which will be higher?",
@@ -77,7 +77,14 @@ export let questions = {
         {
             question: "Who will win Super Bowl LIV MVP?",
             short: 'MVP',
-            options: [{ name: "Patrick Mahomes (KC QB)", image: "/images/mahomes.png", score: 110 }, { name: "Jimmy Garoppolo (SF QB)", image: "/images/garoppolo.png", score: 200 }, { name: "Raheem Mostert (SF RB)", image: "/images/mostert.png", score: 500 }, { name: "Tyreek Hill (KC WR)", image: "/images/hill.png", score: 1600 }, { name: "Travis Kelce (KC TE)", image: "/images/kelce.png", score: 1600 }, { name: "Other", image: "/images/other.png", score: 1200 }]
+            options: [
+                { name: "Patrick Mahomes (KC QB)", image: "/images/mahomes.png", score: 110 }, 
+                { name: "Jimmy Garoppolo (SF QB)", image: "/images/garoppolo.png", score: 200 }, 
+                { name: "Raheem Mostert (SF RB)", image: "/images/mostert.png", score: 500 }, 
+                { name: "Tyreek Hill (KC WR)", image: "/images/hill.png", score: 1600 }, 
+                { name: "Travis Kelce (KC TE)", image: "/images/kelce.png", score: 1600 }, 
+                { name: "Other", image: "/images/other.png", score: 1200 }
+            ]
         }
     ],
     "2021": [
@@ -94,5 +101,69 @@ export let questions = {
                 placeholder: "M:SS"
             }
         },
+        {
+            question: "What will the opening coin toss land on?",
+            short: 'Coin Toss',
+            extrainfo: 'Since the first Super Bowl, HEADS has come up 25 times and TAILS 28. The winner of the Super Bowl has won the coin toss 24 times with HEADS coming up 12 times.',
+            options: [{ name: "Heads", score: 100 }, { name: "Tails", score: 100 }]
+        },
+        {
+            question: "What will the the first play of the game be?",
+            short: 'First Play',
+            options: [{ name: "Run", score: 85 }, { name: "Pass", score: 100 }]
+        },
+        {
+            question: "Which team will score first?",
+            short: 'First Score',
+            options: [{ name: "Kansas City", score: 90, image: "/images/kc.svg" }, { name: "Tampa Bay", score: 100, image: "/images/tb.svg" }]
+        },
+        {
+            question: "What will be mentioned first?",
+            short: 'Tom Brady',
+            extrainfo: 'Excludes halftime and commercials.',
+            options: [{ name: "Tom Brady's Age (43)", score: 105 }, { name: "Tom Brady’s 10th Super Bowl", score: 90 }]
+        },
+        {
+            question: "What will happen to the price of Bitcoin during the Super Bowl?",
+            short: 'Bitcoin',
+            extrainfo: 'Bet is on the Price at the beggining of the game compared to the price at games end, bitcoinaverage.com will be used to settle disputes.',
+            options: [{ name: "Price of Bitcoin goes up", score: 90 }, { name: "Price of Bitcoin goes down", score: 100 }]
+        },
+        {
+            question: "What song will be sung first during the halftime show?",
+            short: 'HT Opening Song',
+            extrainfo: 'Warning: Music videos may contain explicit content',
+            options: [
+                { name: "Starboy", score: 225, embed: "https://www.youtube.com/embed/34Na4j8AVgA" },
+                { name: "Blinding Lights", score: 250, embed: "https://www.youtube.com/embed/4NRXx6U8ABQ" },
+                { name: "Can't Feel My Face", score: 265, embed: "https://www.youtube.com/embed/KEI4qSrkPAs" },
+                { name: "In Your Eyes", score: 275, embed: "https://www.youtube.com/embed/dqRZDebPIGs" },
+                { name: "Other", score: 250 }
+            ]
+        },
+        {
+            question: "Will Ariana Grande be on stage during the halftime show?",
+            short: 'Ariana Grande',
+            options: [{ name: "Yes", score: 205 }, { name: "No", score: 80 }]
+        },
+        {
+            question: "Will Any TD Be Overturned By Replay?",
+            short: 'Replay',
+            options: [{ name: "Yes", score: 140 }, { name: "No", score: 90 }]
+        },
+        {
+            question: "Who will win Puppy Bowl XVII?",
+            short: 'Puppy Bowl',
+            options: [{ name: "Team Fluff", score: 100 }, { name: "Team Ruff", score: 100 }]
+        },
+        {
+            question: "Who will win Super Bowl LV MVP?",
+            short: 'MVP',
+            options: [
+                { name: "Patrick Mahomes (KC QB)", image: "/images/mahomes2.webp", score: 95 }, 
+                { name: "Tom Brady (TB QB)", image: "/images/brady.webp", score: 150 }, 
+                { name: "Other", score: 200 }
+            ]
+        }
     ]
 };
