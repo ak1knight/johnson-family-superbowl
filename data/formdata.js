@@ -145,11 +145,13 @@ export let questions = {
         {
             question: "Will Ariana Grande be on stage during the halftime show?",
             short: 'Ariana Grande',
+            extrainfo: `The Weeknd is featured in "Off the Table" from Ariana Grande's latest album, released in October`,
             options: [{ name: "Yes", score: 205 }, { name: "No", score: 80 }]
         },
         {
             question: "Will Any TD Be Overturned By Replay?",
             short: 'Replay',
+            extrainfo: 'In 2018 49% of all plays challenged by coaches were overturned. In the NFL all scoring plays are automatically reviewed by replay officials without needing to be challenged.',
             options: [{ name: "Yes", score: 140 }, { name: "No", score: 90 }]
         },
         {
