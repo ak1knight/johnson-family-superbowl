@@ -1,5 +1,6 @@
 
 export const periodNames = ["Quarter 1", "Quarter 2", "Quarter 3", "Final"];
+export const tiebreakers = {"2021": {"Quarter 1": "Chiefs Passing Yards", "Quarter 2": "Buccaneers Rushing Yards", "Quarter 3": "Combined Penalty Yards"}}
 export const teams = { "2020": [{ name: "Chiefs", icon: "/images/kc.svg" }, { name: "49ers", icon: "/images/sf.svg" }], "2021": [{ name: "Chiefs", icon: "/images/kc.svg" }, { name: "Buccaneers", icon: "/images/tb.svg" }] };
 export let questions = {
     "2020": [

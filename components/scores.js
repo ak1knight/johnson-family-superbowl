@@ -1,14 +1,15 @@
 import React, { useState } from "react"
 import Card from "./card"
-import { periodNames, teams } from "../data/formdata";
+import { periodNames, teams, tiebreakers } from "../data/formdata";
 
 const extrainfo = `Kansas City has one of the most explosive offenses in the NFL. Led by 2018 NFL MVP Patrick Mahomes' playmaking ability and cannon arm getting the ball to a speedy trio of recievers and all-pro TE Travis Kelce. The Chiefs averaged 28 points per game during the season, but that number has increased later in the season as key players returned from injury.
 For all the firepower on the KC sideline, the 49ers' offense averaged an even better 29.9 points per game. San Francisco gets it done primarily on the ground, rather than through the air, with a stable of running backs headlined by Raheem Mostert and Tevin Coleman.`
 
-const Scores = (props) => {
-    teams[props.year].forEach(t => {
+const Scores = ({year, formData}) => {
+    teams[year].forEach(t => {
         periodNames.forEach(q => {
-            [props.formData[t.name][q].score, props.formData[t.name][q].setScore] = useState(props.formData[t.name][q].score || '');
+            [formData[t.name][q].score, formData[t.name][q].setScore] = useState(formData[t.name][q].score || '');
+            [formData[q].tiebreaker, formData[q].setTiebreaker] = useState(formData[q].tiebreaker || '');
         })
     });
     return <Card id={"score"} title="Score" extrainfo={extrainfo}>
@@ -21,18 +22,29 @@ const Scores = (props) => {
                 </div>
             ))}
         </div>
-        {teams[props.year].map((team, i) => (
+        {teams[year].map((team, i) => (
             <div key={i} className="form-row" >
                 <div className="col mb-2">
                     <h4>{team.name} {!!team.icon && <img style={{width:"1em", height:"1em", verticalAlign: "middle"}} src={team.icon} />}</h4>
                 </div>
                 {periodNames.map((q, j) => (
                     <div key={j} className="col">
-                        <input type="number" value={props.formData[team.name][q].score} className="form-control" teamid="patriots" name="quarter1" onChange={(e) => props.formData[team.name][q].setScore(e.target.value)} ></input>
+                        <input type="number" value={formData[team.name][q].score} className="form-control" onChange={(e) => formData[team.name][q].setScore(e.target.value)} ></input>
                     </div>
                 ))}
             </div>
         ))}
+        <div className="form-row" >
+            <div className="col mb-2">
+                <h4>Tiebreaker</h4>
+            </div>
+            {periodNames.map((q, j) => (
+                <div key={j} className="col">
+                    {!!tiebreakers[year][q] && <input type="number" value={formData[q].tiebreaker} className="form-control form-control-sm" onChange={(e) => formData[q].setTiebreaker(e.target.value)} ></input>}
+                    <small className="form-text text-muted">{tiebreakers[year][q]}</small>
+                </div>
+            ))}
+        </div>
     </Card>
 }
 
