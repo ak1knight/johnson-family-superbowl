@@ -1,4 +1,4 @@
-import data from "../../../data";
+import data from "../../../../data";
 
 export default async (req, res) => {
     console.log("/api/winningentry/new HIT!");

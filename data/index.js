@@ -66,6 +66,7 @@ module.exports = {
                 TableName: "SuperBowlEntries",
                 Item: {
                     id: Date.now(),
+                    yearKey: 2021,
                     entry
                 }
             })

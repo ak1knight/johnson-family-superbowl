@@ -31,8 +31,8 @@ const Admin = () => {
 
         <div className="container mt-3">
             <div className="row">
-                <div className="col-md-8">
-                    {!!currentAdminEntry && <EntryForm questions={questions} endpoint="/api/winningentry/new/2021" entry={currentAdminEntry.entry} isAdmin={true} />}
+                <div className="col">
+                    {!!currentAdminEntry && <EntryForm questions={questions} endpoint="/api/winningentry/new/2021" year={2021} entry={currentAdminEntry.entry} isAdmin={true} />}
                 </div>
             </div>
         </div>
