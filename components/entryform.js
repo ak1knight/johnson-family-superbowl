@@ -11,7 +11,8 @@ let formData = {};
 teams[2021].forEach(t => {
     formData[t.name] = { yards: '' }
     periodNames.forEach(q => {
-        formData[t.name][q] = { score: '' }
+        formData[t.name][q] = { score: '' };
+        formData[q] = { tiebreaker: '' }
     })
 });
 
@@ -43,7 +44,7 @@ const EntryForm = (props) => {
     const handleSubmit = async event => {
         event.preventDefault();
         console.log(!props.isAdmin );
-        if (!props.isAdmin && ( !name || props.questions.some(q => !q.response) || teams.some(t => !formData[t.name].yards || periodNames.some(p => formData[t.name][p].score !== '0' && !formData[t.name][p].score)))) {
+        if (!props.isAdmin && ( !name || props.questions.some(q => !q.response) || teams[year].some(t => !formData[t.name].yards || periodNames.some(p => formData[t.name][p].score !== '0' && !formData[t.name][p].score)))) {
             alert('Please respond to all questions before submitting');
             return
         }

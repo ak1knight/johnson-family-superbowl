@@ -12,6 +12,8 @@ function formatScore(entry, quarter, year) {
             : `${secondTeamScore} - ${firstTeamScore} ${teams[year][1].name}`
 }
 
+const finalColors = ['bg-success text-white border-success', 'bg-warning text-white border-warning', 'bg-danger text-white border-danger']
+
 function toSeconds(str) {
     if (str.includes(":")) {
         var pieces = str.split(":");
@@ -54,6 +56,14 @@ const BigBoardTable = ({year}) => {
             }
         });
 
+        if (!!winningEntry.entry[teams[year][0].name]["Final"] && !!winningEntry.entry[teams[year][0].name]["Final"].score) {
+            let differences = entries.map((e) => Math.abs(e.entry[teams[year][0].name]["Final"].score - winningEntry.entry[teams[year][0].name]["Final"].score) + Math.abs(e.entry[teams[year][1].name]["Final"].score - winningEntry.entry[teams[year][1].name]["Final"].score))
+            let first = Math.min(...differences);
+            let second = Math.min(...differences.filter(d => d > first));
+            let third = Math.min(...differences.filter(d => d > second));
+            wn.topthree = [first, second, third];
+        }
+
         teams[year].forEach(team => {
             if (winningEntry.entry[team.name].yards) {
                 wn[team.name] = Math.min(...entries.map(e => Math.abs(e.entry[team.name].yards - winningEntry.entry[team.name].yards)));
@@ -69,6 +79,14 @@ const BigBoardTable = ({year}) => {
 
     function checkWinningScore(entry, period) {
         return !!winningNumbers && !!winningEntry && !!winningEntry.entry[teams[year][0].name] && !!winningEntry.entry[teams[year][1].name] && !!winningEntry.entry[teams[year][0].name][period] && Math.abs(entry[teams[year][0].name][period].score - winningEntry.entry[teams[year][0].name][period].score) + Math.abs(entry[teams[year][1].name][period].score - winningEntry.entry[teams[year][1].name][period].score) == winningNumbers[period];
+    }
+
+    function checkFinalScore(entry) {
+        return !!winningNumbers?.topthree && !!winningEntry && !!winningEntry.entry[teams[year][0].name] && !!winningEntry.entry[teams[year][1].name] && !!winningEntry.entry[teams[year][0].name]["Final"] && winningNumbers.topthree.indexOf(Math.abs(entry[teams[year][0].name]["Final"].score - winningEntry.entry[teams[year][0].name]["Final"].score) + Math.abs(entry[teams[year][1].name]["Final"].score - winningEntry.entry[teams[year][1].name]["Final"].score));
+    }
+
+    function checkTiebreaker(entry, period) {
+        return !!winningNumbers && !!winningEntry && !!winningEntry.entry[period]?.tiebreaker && Math.abs(entry[period].tiebreaker - winningEntry.entry[period].tiebreaker) == Math.min(...entries.filter(e => checkWinningScore(e.entry, period)).map(e => Math.abs(e.entry[period].tiebreaker - winningEntry.entry[period].tiebreaker)));
     }
 
     function checkWinningYards(entry, team) {
@@ -93,8 +111,9 @@ const BigBoardTable = ({year}) => {
                 <tr key={e.id}>
                     <th scope="row">{e.entry.name}</th>
                     <td className={checkWinningAnthemTime(e.entry) ? 'bg-light text-success border border-success text-center' : 'text-center'} >{e.entry[0].response}</td>
-                    {periodNames.map((q, i) => <td className={checkWinningScore(e.entry, q) ? 'bg-light text-success border border-success text-center' : 'text-center'} key={i}>{formatScore(e.entry, q, year)}</td>)}
-                    {teams[year].map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-light text-success border border-success text-center' : 'text-center'} key={i}>{e.entry[t.name]?.yards}</td>)}
+                    {periodNames.slice(0, 3).map((q, i) => <td className={checkWinningScore(e.entry, q) ? `${checkTiebreaker(e.entry, q) ? `bg-success text-white` : `text-success bg-light`} border-success border text-center` : 'text-center'} key={i}>{formatScore(e.entry, q, year)}</td>)}
+                    <td className={checkFinalScore(e.entry) > -1 ? `${finalColors[checkFinalScore(e.entry)]} border text-center` : 'text-center'}>{formatScore(e.entry, 'Final', year)}</td>
+                    {teams[year].map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-success text-white border border-success text-center' : 'text-center'} key={i}>{e.entry[t.name]?.yards}</td>)}
                 </tr>
             )) :
                 <tr>
