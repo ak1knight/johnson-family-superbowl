@@ -2,9 +2,7 @@ import React, { useState } from "react"
 import Card from "./card"
 import { teams } from "../data/formdata";
 
-const extrainfo = `
-Both Kansas City and San Francisco averaged right around 380 yards per game on offense during the regular season. However, the 49ers only gave up 281 yards per game on defense, which was second best in the NFL, while the Chiefs gave up nearly 350 yards per game.
-`
+const extrainfo = ''
 
 const Yards = (props) => {
     teams[props.year].forEach(t => {

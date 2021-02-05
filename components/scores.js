@@ -2,8 +2,7 @@ import React, { useState } from "react"
 import Card from "./card"
 import { periodNames, teams, tiebreakers } from "../data/formdata";
 
-const extrainfo = `Kansas City has one of the most explosive offenses in the NFL. Led by 2018 NFL MVP Patrick Mahomes' playmaking ability and cannon arm getting the ball to a speedy trio of recievers and all-pro TE Travis Kelce. The Chiefs averaged 28 points per game during the season, but that number has increased later in the season as key players returned from injury.
-For all the firepower on the KC sideline, the 49ers' offense averaged an even better 29.9 points per game. San Francisco gets it done primarily on the ground, rather than through the air, with a stable of running backs headlined by Raheem Mostert and Tevin Coleman.`
+const extrainfo = ''
 
 const Scores = ({year, formData}) => {
     teams[year].forEach(t => {
