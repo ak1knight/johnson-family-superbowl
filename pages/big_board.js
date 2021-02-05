@@ -15,11 +15,11 @@ const BigBoard = () => {
             </div>
         </div>
         <div className="container">
-            <div className="btn-toolbar mb-3" role="toolbar">
-                <div className="btn-group mr-2" role="group">
-                    {[2020, 2021].map(y => <button type="button" className={`btn btn-primary ${y === year ? 'active' : ''}`} onClick={() => setYear(y)}>{y}</button>)}
-                </div>
-            </div>
+            <ul class="nav nav-tabs mb-3">
+                {[2020, 2021].map(y => <li class="nav-item">
+                    <a className={`nav-link ${y === year ? 'active' : ''}`} href="#" onClick={() => setYear(y)}>{y}</a>
+                </li>)}
+            </ul>
             <Card>
                 <div className="table-responsive">
                     <BigBoardTable year={year} />

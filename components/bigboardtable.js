@@ -12,7 +12,7 @@ function formatScore(entry, quarter, year) {
             : `${secondTeamScore} - ${firstTeamScore} ${teams[year][1].name}`
 }
 
-const finalColors = ['bg-success text-white border-success', 'bg-warning text-white border-warning', 'bg-danger text-white border-danger']
+const finalColors = ['bg-primary text-white border-primary', 'bg-dark text-white border-primary', 'bg-light text-primary border-primary']
 
 function toSeconds(str) {
     if (str.includes(":")) {
@@ -110,10 +110,10 @@ const BigBoardTable = ({year}) => {
             {!!entries ? entries.map(e => (
                 <tr key={e.id}>
                     <th scope="row">{e.entry.name}</th>
-                    <td className={checkWinningAnthemTime(e.entry) ? 'bg-light text-success border border-success text-center' : 'text-center'} >{e.entry[0].response}</td>
-                    {periodNames.slice(0, 3).map((q, i) => <td className={checkWinningScore(e.entry, q) ? `${checkTiebreaker(e.entry, q) ? `bg-success text-white` : `text-success bg-light`} border-success border text-center` : 'text-center'} key={i}>{formatScore(e.entry, q, year)}</td>)}
-                    <td className={checkFinalScore(e.entry) > -1 ? `${finalColors[checkFinalScore(e.entry)]} border text-center` : 'text-center'}>{formatScore(e.entry, 'Final', year)}</td>
-                    {teams[year].map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-success text-white border border-success text-center' : 'text-center'} key={i}>{e.entry[t.name]?.yards}</td>)}
+                    <td className={checkWinningAnthemTime(e.entry) ? 'bg-primary text-white border border-primary text-center' : 'text-center'} >{e.entry[0].response}</td>
+                    {periodNames.slice(0, 3).map((q, i) => <td className={checkWinningScore(e.entry, q) ? `${checkTiebreaker(e.entry, q) ? `bg-primary text-white` : `text-primary bg-light`} border-primary border text-center` : 'text-center'} key={i}>{formatScore(e.entry, q, year)}</td>)}
+                    <td className={checkFinalScore(e.entry) > -1 ? `${finalColors[checkFinalScore(e.entry)]} border text-center` : 'text-center'}>{checkFinalScore(e.entry) > -1 && <span class="badge badge-light">{checkFinalScore(e.entry) + 1}</span>} {formatScore(e.entry, 'Final', year)}</td>
+                    {teams[year].map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-primary text-white border border-primary text-center' : 'text-center'} key={i}>{e.entry[t.name]?.yards}</td>)}
                 </tr>
             )) :
                 <tr>
