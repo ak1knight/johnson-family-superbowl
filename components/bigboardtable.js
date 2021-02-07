@@ -107,15 +107,17 @@ const BigBoardTable = ({year}) => {
             </tr>
         </thead>
         <tbody>
-            {!!entries ? entries.map(e => (
-                <tr key={e.id}>
+            {!!entries ? entries.map(e => {
+                const finalPlace = checkFinalScore(e.entry);
+
+                return <tr key={e.id}>
                     <th scope="row">{e.entry.name}</th>
                     <td className={checkWinningAnthemTime(e.entry) ? 'bg-primary text-white border border-primary text-center' : 'text-center'} >{e.entry[0].response}</td>
                     {periodNames.slice(0, 3).map((q, i) => <td className={checkWinningScore(e.entry, q) ? `${checkTiebreaker(e.entry, q) ? `bg-primary text-white` : `text-primary bg-light`} border-primary border text-center` : 'text-center'} key={i}>{formatScore(e.entry, q, year)}</td>)}
-                    <td className={checkFinalScore(e.entry) > -1 ? `${finalColors[checkFinalScore(e.entry)]} border text-center` : 'text-center'}>{checkFinalScore(e.entry) > -1 && <span class="badge badge-light">{checkFinalScore(e.entry) + 1}</span>} {formatScore(e.entry, 'Final', year)}</td>
+                    <td className={finalPlace && finalPlace > -1 ? `${finalColors[finalPlace]} border text-center` : 'text-center'}>{finalPlace && finalPlace > -1 && <span class="badge badge-light">{checkFinalScore(e.entry) + 1}</span>} {formatScore(e.entry, 'Final', year)}</td>
                     {teams[year].map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-primary text-white border border-primary text-center' : 'text-center'} key={i}>{e.entry[t.name]?.yards}</td>)}
                 </tr>
-            )) :
+            }) :
                 <tr>
                     <td className="d-flex justify-content-center">
                         <div className="spinner-border" role="status">
