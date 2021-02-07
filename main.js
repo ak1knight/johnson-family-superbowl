@@ -9,6 +9,13 @@ async function main(event, context) {
         //get items from dynamo
         const params = {
             TableName: `SuperBowlEntries`,
+            FilterExpression: "#yr = :yyyy",
+            ExpressionAttributeNames:{
+                "#yr": "yearKey"
+            },
+            ExpressionAttributeValues: {
+                ":yyyy": 2021
+            }
         };
         tableContents = await scanDB(params);
     }catch(err){
@@ -16,18 +23,15 @@ async function main(event, context) {
         return err;
     }
     let calls = [];
-    tableContents.forEach(function(value){
-        let params = {
-            ExpressionAttributeValues: {
-                ":y": 2020,
-            },
-            Key: {
-                "id": value.id
-            },
-            TableName: `SuperBowlEntries`,
-            UpdateExpression: "SET yearKey = :y",
-            };
-        calls.push(dynamoDb.update(params).promise());
+    tableContents.reduce((acc, v, i, arr) => arr.findIndex(e => v.entry.name === e.entry.name) !== i && acc.findIndex(e => v.entry.name === e.entry.name) === -1 ? acc.concat(v) : acc, []).forEach(function(value){
+        // let params = {
+        //     Key: {
+        //         "id": value.id
+        //     },
+        //     TableName: `SuperBowlEntries`,
+        // };
+        // calls.push(dynamoDb.delete(params).promise());
+        console.log(`${value.yearKey} ${value.entry.name}`)
     });
     let response;
     try{
