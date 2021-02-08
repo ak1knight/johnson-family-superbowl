@@ -114,7 +114,7 @@ const BigBoardTable = ({year}) => {
                     <th scope="row">{e.entry.name}</th>
                     <td className={checkWinningAnthemTime(e.entry) ? 'bg-primary text-white border border-primary text-center' : 'text-center'} >{e.entry[0].response}</td>
                     {periodNames.slice(0, 3).map((q, i) => <td className={checkWinningScore(e.entry, q) ? `${checkTiebreaker(e.entry, q) ? `bg-primary text-white` : `text-primary bg-light`} border-primary border text-center` : 'text-center'} key={i}>{formatScore(e.entry, q, year)}</td>)}
-                    <td className={finalPlace && finalPlace > -1 ? `${finalColors[finalPlace]} border text-center` : 'text-center'}>{finalPlace && finalPlace > -1 && <span class="badge badge-light">{checkFinalScore(e.entry) + 1}</span>} {formatScore(e.entry, 'Final', year)}</td>
+                    <td className={finalPlace !== false && finalPlace > -1 ? `${finalColors[finalPlace]} border text-center` : 'text-center'}>{finalPlace !== false && finalPlace > -1 && <span class="badge badge-light">{checkFinalScore(e.entry) + 1}</span>} {formatScore(e.entry, 'Final', year)}</td>
                     {teams[year].map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-primary text-white border border-primary text-center' : 'text-center'} key={i}>{e.entry[t.name]?.yards}</td>)}
                 </tr>
             }) :
