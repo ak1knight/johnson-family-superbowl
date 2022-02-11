@@ -4,11 +4,11 @@ import { teams } from "../data/formdata";
 
 const extrainfo = ''
 
-const Yards = (props) => {
+const Yards = React.forwardRef<HTMLDivElement, {year:number, formData:any}>((props, ref) => {
     teams[props.year].forEach(t => {
         [props.formData[t.name].yards, props.formData[t.name].setYards] = useState(props.formData[t.name].yards || '');
     });
-    return <Card id="yards" title="Total Yards" extrainfo={extrainfo}>
+    return <Card id="yards" title="Total Yards" extrainfo={extrainfo} ref={ref}>
         <div className="row" >
             {teams[props.year].map((team, i) => (
                 <div key={i} className="col-md">
@@ -18,6 +18,6 @@ const Yards = (props) => {
             ))}
         </div>
     </Card>
-}
+})
 
 export default Yards

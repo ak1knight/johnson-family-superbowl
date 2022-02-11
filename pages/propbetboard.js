@@ -5,7 +5,7 @@ import PropBetBoardTable from '../components/propbetboardtable';
 
 
 const PropBetBoard = () => {
-    const [year, setYear] = useState(2021);
+    const [year, setYear] = useState(2022);
 
     return <Layout>
         <div className="jumbotron jumbotron-fluid bg-primary text-white">
@@ -15,7 +15,7 @@ const PropBetBoard = () => {
         </div>
         <div className="container mt-3">
             <ul class="nav nav-tabs mb-3">
-                {[2020, 2021].map(y => <li class="nav-item">
+                {[2020, 2021, 2022].map(y => <li class="nav-item">
                     <a className={`nav-link ${y === year ? 'active' : ''}`} href="#" onClick={() => setYear(y)}>{y}</a>
                 </li>)}
             </ul>

@@ -6,7 +6,7 @@ import BigBoardTable from "../components/bigboardtable";
 
 
 const BigBoard = () => {
-    const [year, setYear] = useState(2021);
+    const [year, setYear] = useState(2022);
 
     return <Layout>
         <div className="jumbotron jumbotron-fluid bg-primary text-white">
@@ -16,7 +16,7 @@ const BigBoard = () => {
         </div>
         <div className="container">
             <ul class="nav nav-tabs mb-3">
-                {[2020, 2021].map(y => <li class="nav-item">
+                {[2020, 2021, 2022].map(y => <li class="nav-item">
                     <a className={`nav-link ${y === year ? 'active' : ''}`} href="#" onClick={() => setYear(y)}>{y}</a>
                 </li>)}
             </ul>

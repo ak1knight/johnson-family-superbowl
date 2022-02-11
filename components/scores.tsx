@@ -1,17 +1,17 @@
 import React, { useState } from "react"
 import Card from "./card"
-import { periodNames, teams, tiebreakers } from "../data/formdata";
+import { periodNames, teams, tiebreakers, Team } from "../data/formdata"
 
 const extrainfo = ''
 
-const Scores = ({year, formData}) => {
-    teams[year].forEach(t => {
+const Scores = React.forwardRef<HTMLDivElement, {year:number, formData:any}>(({year, formData}, ref) => {
+    teams[year].forEach((t:Team) => {
         periodNames.forEach(q => {
             [formData[t.name][q].score, formData[t.name][q].setScore] = useState(formData[t.name][q].score || '');
             [formData[q].tiebreaker, formData[q].setTiebreaker] = useState(formData[q].tiebreaker || '');
         })
     });
-    return <Card id={"score"} title="Score" extrainfo={extrainfo}>
+    return <Card id={"score"} title="Score" extrainfo={extrainfo} ref={ref}>
         <div className="form-row" >
             <div className="col">
             </div>
@@ -45,6 +45,6 @@ const Scores = ({year, formData}) => {
             ))}
         </div>
     </Card>
-}
+})
 
 export default Scores

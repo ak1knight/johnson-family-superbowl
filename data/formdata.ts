@@ -1,7 +1,17 @@
-
+export type Team = {
+    name:string,
+    icon:string
+}
 export const periodNames = ["Quarter 1", "Quarter 2", "Quarter 3", "Final"];
-export const tiebreakers = {"2021": {"Quarter 1": "Chiefs Passing Yards", "Quarter 2": "Buccaneers Rushing Yards", "Quarter 3": "Combined Penalty Yards"}}
-export const teams = { "2020": [{ name: "Chiefs", icon: "/images/kc.svg" }, { name: "49ers", icon: "/images/sf.svg" }], "2021": [{ name: "Chiefs", icon: "/images/kc.svg" }, { name: "Buccaneers", icon: "/images/tb.svg" }] };
+export const tiebreakers = {
+    "2021": {"Quarter 1": "Chiefs Passing Yards", "Quarter 2": "Buccaneers Rushing Yards", "Quarter 3": "Combined Penalty Yards"},
+    "2022": {"Quarter 1": "Bengals Passing Yards", "Quarter 2": "Ramss Rushing Yards", "Quarter 3": "Combined Penalty Yards"}
+}
+export const teams:{[year: string]: Team[]} = { 
+    "2020": [{ name: "Chiefs", icon: "/images/kc.svg" }, { name: "49ers", icon: "/images/sf.svg" }], 
+    "2021": [{ name: "Chiefs", icon: "/images/kc.svg" }, { name: "Buccaneers", icon: "/images/tb.svg" }],
+    "2022": [{ name: "Rams", icon: "/images/la.svg" }, { name: "Bengals", icon: "/images/cin.svg" }],
+};
 export let questions = {
     "2020": [
         {
@@ -168,5 +178,82 @@ export let questions = {
                 { name: "Other", score: 200 }
             ]
         }
-    ]
+    ],
+    "2022": [
+        
+        {
+            question: "How long will it take Mickey Guyton to sing the National Anthem?",
+            short: "National Anthem",
+            extrainfo: `Oddsmakers in Vegas predict the anthem to go for 1:46, which would be the shortest since Kelly Clarkson's 1:34 for Super Bowl 46. 
+            In that 10 year span, 7 anthem renditions have exceeded 2 minutes in length, including last year's duet of Jazmine Sullivan and Eric Church which went a whopping 2:17.
+            The longest anthem time of the past 15 years, however, belongs to Alicia Keys, who sang for 2:36 in 2013`,
+            config: {
+                placeholder: "M:SS"
+            }
+        },
+        {
+            question: "What will the opening coin toss land on?",
+            short: 'Coin Toss',
+            extrainfo: 'Since the first Super Bowl, HEADS has come up 25 times and TAILS 28. The winner of the Super Bowl has won the coin toss 24 times with HEADS coming up 12 times.',
+            options: [{ name: "Heads", score: 100 }, { name: "Tails", score: 100 }]
+        },
+        {
+            question: "Which will happen first in the game?",
+            short: 'Sack or TD',
+            options: [{ name: "Sack", score: 90 }, { name: "Touchdown", score: 100 }]
+        },
+        {
+            question: "Which team will score first?",
+            short: 'First Score',
+            options: [{ name: "Cincinnati", score: 100, image: "/images/cin.svg" }, { name: "Los Angeles", score: 100, image: "/images/la.svg" }]
+        },
+        {
+            question: "Which company's commercial will play first?",
+            short: 'Commercial',
+            options: [{ name: "Meta (Facebook)", score: 90, image: 'images/meta.svg' }, { name: "Amazon Prime", score: 110, image: 'images/amazon_prime.svg' }, { name: "Google", score: 110, image: 'images/google.svg' }]
+        },
+        {
+            question: "What will happen to the price of Bitcoin during the Super Bowl?",
+            short: 'Bitcoin',
+            extrainfo: 'Bet is on the Price at the beggining of the game compared to the price at games end, bitcoinaverage.com will be used to settle disputes.',
+            options: [{ name: "Price of Bitcoin goes up", score: 100 }, { name: "Price of Bitcoin goes down", score: 100 }]
+        },
+        {
+            question: "Which artist will perform first during the halftime show?",
+            short: 'HT Opening Artist',
+            options: [
+                { name: "Mary J Blige", score: 125 },
+                { name: "Kendrick Lamar", score: 150 },
+                { name: "Snoop Dogg", score: 175 },
+                { name: "Dr. Dre", score: 200 },
+                { name: "Eminem", score: 225 }
+            ]
+        },
+        {
+            question: "What will Eminem wear on his head during the halftime show?",
+            short: 'Eminem',
+            options: [{ name: "Nothing", score: 110 }, { name: "Hat", score: 125 }, { name: "Hood", score: 150 }, { name: "Do Rag or Bandana", score: 160 }]
+        },
+        {
+            question: "Will there be a fourth quarter comeback?",
+            short: 'Comeback',
+            options: [{ name: "Yes", score: 140 }, { name: "No", score: 60 }]
+        },
+        {
+            question: "Will the team who scores first win the game?",
+            short: 'Puppy Bowl',
+            options: [{ name: "Yes", score: 85 }, { name: "No", score: 115 }]
+        },
+        {
+            question: "Who will win Super Bowl LVI MVP?",
+            short: 'MVP',
+            options: [
+                { name: "Matthew Stafford (LAR QB)", image: "/images/stafford.webp", score: 110 }, 
+                { name: "Joe Burrow (CIN QB)", image: "/images/burrow.webp", score: 150 }, 
+                { name: "Cooper Kupp (LAR WR)", image: "/images/kupp.webp", score: 200 },
+                { name: "Aaron Donald (LAR DE)", image: "/images/donald.webp", score: 400 },
+                { name: "Other", score: 200 }
+            ]
+        }
+    ],
 };

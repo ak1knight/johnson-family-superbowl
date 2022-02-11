@@ -1,11 +1,10 @@
-import React from 'react'
+import { Component } from 'react'
 import Head from 'next/head'
 import Nav from './nav'
 
-const Layout = (props) => (
-    <div>
+const Layout:React.FC<{title?:string}> = ({title, children}) => <div>
         <Head>
-            <title>{props.title || 'Home'}</title>
+            <title>{title || 'Home'}</title>
             <link rel="icon" href="/favicon.ico" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossOrigin="anonymous"/>
             <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossOrigin="anonymous"></script>
@@ -15,9 +14,8 @@ const Layout = (props) => (
 
         <Nav />
 
-        {props.children}
+        {children}
     </div>
-)
 
 
 export default Layout

@@ -1,55 +1,58 @@
+import { DynamoDBClient, DynamoDBClientConfig } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocument, GetCommand, PutCommand, ScanCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+
+const dynamoDbRegion = "us-west-1";
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 const getDynamoDBClient = () => {
-    const AWS = require("aws-sdk");
 
-    const dynamoDbRegion = "us-west-1";
-
-    const options = {
-        convertEmptyValues: true,
-        region: dynamoDbRegion
+    const options:DynamoDBClientConfig = {
+        region: dynamoDbRegion,
+        credentials: {
+            accessKeyId: 'AKIAXZD4GVVDJ54AJGVD',
+            secretAccessKey: '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'
+        }
     };
 
     const client = process.env.LOCAL_DYNAMO_DB_ENDPOINT
-        ? new AWS.DynamoDB.DocumentClient({
+        ? new DynamoDBClient({
             ...options,
             endpoint: process.env.LOCAL_DYNAMO_DB_ENDPOINT
         })
-        : new AWS.DynamoDB.DocumentClient(options);
+        : new DynamoDBClient(options);
 
-    return client;
+    return DynamoDBDocument.from(client);
 };
 
 module.exports = {
     readEntries: async (year) => {
         const { Items } = await getDynamoDBClient()
-            .scan({
+            .send(new ScanCommand({
                 TableName: "SuperBowlEntries",
                 FilterExpression: "yearKey = :y",
                 ExpressionAttributeValues: {
                     ":y": year
                 }
-            })
-            .promise();
+            }));
 
         return Items;
     },
     getEntry: async entryId => {
-        const { Items } = await getDynamoDBClient()
-            .scan({
+        const entry = await getDynamoDBClient()
+            .send(new GetCommand({
                 TableName: "SuperBowlEntries",
                 Key: {
-                    "id": entryId
+                    id: entryId
                 }
-            })
-            .promise();
-
-        //const entry = Items.find(entry => entry.id == entryId);
+            }));
 
         return entry;
     },
     updateEntry: async (entryId, entry) => {
         const client = getDynamoDBClient();
 
-        await client.update({
+        await client.send(new UpdateCommand({
             TableName: "SuperBowlEntries",
             Key: {
                 id: entryId
@@ -58,19 +61,17 @@ module.exports = {
             ExpressionAttributeValues:{
                 ":e": entry
             }
-        }).promise();
+        }));
     },
     createEntry: async entry => {
-        await getDynamoDBClient()
-            .put({
+        await getDynamoDBClient().send(new PutCommand({
                 TableName: "SuperBowlEntries",
                 Item: {
                     id: Date.now(),
-                    yearKey: 2021,
+                    yearKey: 2022,
                     entry
                 }
-            })
-            .promise();
+            }));
     },
     createWinningEntry: async (entry, year) => {
         const client = getDynamoDBClient();
@@ -84,7 +85,7 @@ module.exports = {
             ExpressionAttributeValues:{
                 ":e": entry
             }
-        }).promise();
+        });
     },
     getWinningEntry: async (year) => {
         console.log(year)
@@ -94,7 +95,7 @@ module.exports = {
                 Key: {
                     id: String(year - 2019)
                 }
-            }).promise();
+            });
 
         return Item;
     }
