@@ -241,7 +241,7 @@ export let questions = {
         },
         {
             question: "Will the team who scores first win the game?",
-            short: 'Puppy Bowl',
+            short: 'First Score Wins',
             options: [{ name: "Yes", score: 85 }, { name: "No", score: 115 }]
         },
         {

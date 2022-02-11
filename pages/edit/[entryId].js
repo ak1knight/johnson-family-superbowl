@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Scrollspy from 'react-scrollspy'
+import { Scrollspy } from '@makotot/ghostui'
 import fetch from 'isomorphic-unfetch';
 import { useRouter } from 'next/router';
 import EntryForm from "../../components/entryform"
@@ -25,6 +25,7 @@ const Edit = ({currentEntry, entryId}) => {
     // }, []);
 
     // console.log(!!currentEntry && Object.values(currentEntry.entry));
+    const sectionRefs = items.map(() => useRef<HTMLDivElement>(null))
 
     return <Layout>
         <div className="jumbotron jumbotron-fluid bg-warning text-white">
@@ -34,20 +35,20 @@ const Edit = ({currentEntry, entryId}) => {
         </div>
 
         <div className="container mt-3">
-            <div className="row">
-                <div className="col-3-sm">
-                    <div id="form-sidebar" className="d-none d-md-flex flex-column list-group" style={{position: "sticky", top: "10px"}}>
-                        <Scrollspy items={ [{question: "Score"}, {question: "Yards"}, ...questions].map(q => `${q.question.toLowerCase().replace(/( |\W)/g, '')}`) } currentClassName="active">
+            <Scrollspy sectionRefs={sectionRefs} >
+                {({ currentElementIndexInViewport, elementsStatusInViewport }) => (<div className="row">
+                    <div className="col-3-sm">
+                        <div id="form-sidebar" className="d-none d-md-flex flex-column list-group" style={{position: "sticky", top: "10px"}}>
                             {[{question: "Score"}, {question: "Yards"}, ...questions].map((q, i) => (
-                                <a className="list-group-item list-group-item-action" key={i} href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{!!q.short ? q.short : q.question}</a>
+                                <a className={`list-group-item list-group-item-action ${ currentElementIndexInViewport === i && elementsStatusInViewport[i] ? "active" : "" }`} key={i} href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{!!q.short ? q.short : q.question} {elementsStatusInViewport[i]}</a>
                             ))}
-                        </Scrollspy>
+                        </div>
                     </div>
-                </div>
-                <div className="col-sm">
-                    <EntryForm questions={Object.values(currentEntry.entry).slice(0,12)} endpoint={`/api/entry/update?entryId=${entryId}`} entry={currentEntry.entry} />
-                </div>
-            </div>
+                    <div className="col-sm">
+                        <EntryForm questions={Object.values(currentEntry.entry).slice(0,12)} endpoint={`/api/entry/update?entryId=${entryId}`} entry={currentEntry.entry} sectionRefs={sectionRefs} />
+                    </div>
+                </div>)}
+            </Scrollspy>
         </div>
 
         
