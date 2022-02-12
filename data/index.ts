@@ -3,15 +3,17 @@ import { DynamoDBDocument, GetCommand, PutCommand, ScanCommand, UpdateCommand } 
 
 const dynamoDbRegion = "us-west-1";
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const getDynamoDBClient = () => {
+
+    console.log(process.env)
 
     const options:DynamoDBClientConfig = {
         region: dynamoDbRegion,
         credentials: {
-            accessKeyId: 'AKIAXZD4GVVDJ54AJGVD',
-            secretAccessKey: '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'
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
         }
     };
 
