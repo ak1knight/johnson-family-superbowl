@@ -6,7 +6,7 @@ import { questions } from "../data/formdata";
 
 
 const Admin = () => {
-    let [currentAdminEntry, setCurrentAdminEntry] = useState();
+    let [currentAdminEntry, setCurrentAdminEntry] = useState<any>();
     useEffect(() => {
         async function fetchData() {
             const winningEntryResponse = await fetch('/api/winningentry/2021');
@@ -19,7 +19,7 @@ const Admin = () => {
     }, []);
 
     let questions = !!currentAdminEntry && Object.entries(currentAdminEntry.entry)
-        .filter(([key]) => !isNaN(parseFloat(key)) && isFinite(key))
+        .filter(([key]) => !isNaN(parseFloat(key)) && isFinite(parseFloat(key)))
         .map(([, value]) => value);
 
     return <Layout>

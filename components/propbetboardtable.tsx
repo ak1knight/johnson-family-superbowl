@@ -1,10 +1,10 @@
 import data from '../data'
 import { useState, useEffect } from 'react';
-import { questions } from "../data/formdata";
+import { Entry, questions } from "../data/formdata";
 
-const PropBetBoardTable = ({year}) => {
-    const [entries, setEntries] = useState();
-    const [winningEntry, setWinningEntry] = useState();
+const PropBetBoardTable = ({year}: {year: string | number}) => {
+    const [entries, setEntries] = useState<Array<{entry: Entry, yearKey: string | number, id: number}>>();
+    const [winningEntry, setWinningEntry] = useState<{entry: Entry, yearKey: string | number}>();
     
     useEffect(() => {
         setEntries(null)
@@ -21,10 +21,6 @@ const PropBetBoardTable = ({year}) => {
 
     console.log(winningEntry);
     console.log(year);
-
-    function checkWinningScore(entry, period) {
-        return !!winningNumbers && !!winningEntry && !!winningEntry.entry[teams[0].name][period] && Math.abs(entry[teams[0].name][period].score - winningEntry.entry[teams[0].name][period].score) + Math.abs(entry[teams[1].name][period].score - winningEntry.entry[teams[1].name][period].score) == winningNumbers[period];
-    }
 
     if (!!entries) {
         entries.sort((e1, e2) => 
@@ -48,7 +44,7 @@ const PropBetBoardTable = ({year}) => {
                 const rank = arr.slice().map(a => questions[year].slice(1).map((q, i) => !!winningEntry && winningEntry.yearKey === year && !!winningEntry.entry[i + 1] && a.entry[i + 1].response == winningEntry.entry[i + 1].response ? q.options.find(o => o.name == winningEntry.entry[i + 1].response).score : 0).reduce((a,b) => a + b, 0)).indexOf(entryScore);
 
                 return <tr key={e.id} style={entryScore > 0 && rank < 5 ? {backgroundColor: `rgb(${193 + (rank * (62 / 5))},${226 + (rank * (29 / 5))},${255 + (rank * (0 / 5))})`} : {}}>
-                    <th scope="row text-center"><span class="badge badge-light">{rank + 1}</span></th>
+                    <th scope="row text-center"><span className="badge badge-light">{rank + 1}</span></th>
                     <th scope="row">{e.entry.name}</th>
                     {questions[year].slice(1).map((q, i) => <td className={!!winningEntry && winningEntry.yearKey === year && !!winningEntry.entry[i + 1] && e.entry[i + 1].response == winningEntry.entry[i + 1].response ? 'text-success font-weight-bold' : ''} key={i}>{e.entry[i + 1].response}</td>)}
                     <td className="font-weight-bold">{questions[year].slice(1).map((q, i) => !!winningEntry && winningEntry.yearKey === year && !!winningEntry.entry[i + 1] && e.entry[i + 1].response == winningEntry.entry[i + 1].response ? q.options.find(o => o.name == winningEntry.entry[i + 1].response).score : 0).reduce((a,b) => a + b, 0)}</td>

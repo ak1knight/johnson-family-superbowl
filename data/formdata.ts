@@ -1,18 +1,89 @@
-export type Team = {
-    name:string,
-    icon:string
+enum TeamName {
+    Chiefs = "Chiefs",
+    Buccaneers = "Buccaneers",
+    "49ers" = "49ers",
+    Rams = "Rams",
+    Bengals = "Bengals"
 }
-export const periodNames = ["Quarter 1", "Quarter 2", "Quarter 3", "Final"];
+
+export type Team = {
+    name:TeamName,
+    icon:string
+};
+
+type Option = {
+    name: string,
+    score: number,
+    image?: string,
+    embed?: string
+}
+
+export type Question = {
+    question: string,
+    short: string,
+    extrainfo?: string,
+    config?: {placeholder: string},
+    options?: Option[]
+}
+
+export type AnsweredQuestion = Question & {
+    response: string | Option
+}
+
+type Year = readonly [Team, Team]
+
+export const teams:{[year: string]: Year} = { 
+    "2020": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName["49ers"], icon: "/images/sf.svg" }], 
+    "2021": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName.Buccaneers, icon: "/images/tb.svg" }],
+    "2022": [{ name: TeamName.Rams, icon: "/images/la.svg" }, { name: TeamName.Bengals, icon: "/images/cin.svg" }],
+} as const; 
+
+export const periodNames = ["Quarter 1", "Quarter 2", "Quarter 3", "Final"] as const;
+
+type TeamScore = {
+    "Quarter 1": {
+        score: number;
+    };
+    "Quarter 2": {
+        score: number;
+    };
+    "Quarter 3": {
+        score: number;
+    };
+    "Final": {
+        score: number;
+    };
+    yards: number;
+};
+
+export type Entry = {
+    [index: number]: AnsweredQuestion,
+    [TeamName.Chiefs]?: TeamScore,
+    "49ers"?: TeamScore,
+    [TeamName.Buccaneers]?: TeamScore,
+    [TeamName.Bengals]?: TeamScore,
+    [TeamName.Rams]?: TeamScore
+    "Quarter 1": {
+        tiebreaker: number
+    },
+    "Quarter 2": {
+        tiebreaker: number
+    }
+    "Quarter 3": {
+        tiebreaker: number
+    }
+    "Final": {
+        tiebreaker: number
+    }
+    name: string
+}
+
 export const tiebreakers = {
     "2021": {"Quarter 1": "Chiefs Passing Yards", "Quarter 2": "Buccaneers Rushing Yards", "Quarter 3": "Combined Penalty Yards"},
     "2022": {"Quarter 1": "Bengals Passing Yards", "Quarter 2": "Ramss Rushing Yards", "Quarter 3": "Combined Penalty Yards"}
 }
-export const teams:{[year: string]: Team[]} = { 
-    "2020": [{ name: "Chiefs", icon: "/images/kc.svg" }, { name: "49ers", icon: "/images/sf.svg" }], 
-    "2021": [{ name: "Chiefs", icon: "/images/kc.svg" }, { name: "Buccaneers", icon: "/images/tb.svg" }],
-    "2022": [{ name: "Rams", icon: "/images/la.svg" }, { name: "Bengals", icon: "/images/cin.svg" }],
-};
-export let questions = {
+
+export let questions: Record<string, Question[]> = {
     "2020": [
         {
             question: "How long will it take Demi Lovato to sing the National Anthem?",

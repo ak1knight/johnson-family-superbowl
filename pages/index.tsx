@@ -9,10 +9,7 @@ import { questions } from "../data/formdata";
 const Home = () => {
     const [year, setYear] = useState(2022);
 
-    const titleQs = [{question: "Score"}, {question: "Yards"}, ...questions[year]]
-    const titles = [{question: "Score"}, {question: "Yards"}, ...questions[year]].map((q, i) => (
-        <a className="list-group-item list-group-item-action" key={i} href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{!!q.short ? q.short : q.question}</a>
-    ));
+    const titleQs = [{question: "Score", short: "Score"}, {question: "Yards", short: "Yards"}, ...questions[year]]
 
     const items = [{question: "Score"}, {question: "Yards"}, ...questions[year]].map(q => `${q.question.toLowerCase().replace(/( |\W)/g, '')}`)
 
@@ -33,7 +30,7 @@ const Home = () => {
                     <div className="col-3-sm">
                         <div id="form-sidebar" className="d-none d-md-flex flex-column list-group" style={{position: "sticky", top: "10px"}}>
                             {titleQs.map((q, i) => (
-                                <a className={`list-group-item list-group-item-action ${ currentElementIndexInViewport === i && elementsStatusInViewport[i] ? "active" : "" }`} key={i} href={`#${q.question.toLowerCase().replace(/( |\W)/g, '')}`}>{!!q.short ? q.short : q.question} {elementsStatusInViewport[i]}</a>
+                                <a className={`list-group-item list-group-item-action ${ currentElementIndexInViewport === i && elementsStatusInViewport[i] ? "active" : "" }`} key={i} href={`#${q.short.toLowerCase().replace(/( |\W)/g, '')}`}>{q.short} {elementsStatusInViewport[i]}</a>
                             ))}
                         </div>
                     </div>

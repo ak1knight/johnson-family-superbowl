@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import dynamic from 'next/dynamic'
 import Layout from '../components/layout';
 import Card from '../components/card';
-import BigBoardTable from "../components/bigboardtable";
+import PropBetBoardTable from '../components/propbetboardtable';
 
 
-const BigBoard = () => {
+const PropBetBoard = () => {
     const [year, setYear] = useState(2022);
 
     return <Layout>
@@ -14,15 +13,15 @@ const BigBoard = () => {
                 <h1 className="display-4">The Big Board</h1>
             </div>
         </div>
-        <div className="container">
-            <ul class="nav nav-tabs mb-3">
-                {[2020, 2021, 2022].map(y => <li class="nav-item">
+        <div className="container mt-3">
+            <ul className="nav nav-tabs mb-3">
+                {[2020, 2021, 2022].map(y => <li className="nav-item">
                     <a className={`nav-link ${y === year ? 'active' : ''}`} href="#" onClick={() => setYear(y)}>{y}</a>
                 </li>)}
             </ul>
             <Card>
                 <div className="table-responsive">
-                    <BigBoardTable year={year} />
+                    <PropBetBoardTable year={year} />
                 </div>
             </Card>
         </div>
@@ -30,4 +29,4 @@ const BigBoard = () => {
 }
 
 
-export default BigBoard
+export default PropBetBoard

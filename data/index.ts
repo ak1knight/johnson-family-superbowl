@@ -3,18 +3,12 @@ import { DynamoDBDocument, GetCommand, PutCommand, ScanCommand, UpdateCommand } 
 
 const dynamoDbRegion = "us-west-1";
 
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const getDynamoDBClient = () => {
 
-    console.log(process.env)
-
     const options:DynamoDBClientConfig = {
         region: dynamoDbRegion,
-        credentials: {
-            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-        }
     };
 
     const client = process.env.LOCAL_DYNAMO_DB_ENDPOINT
@@ -27,7 +21,7 @@ const getDynamoDBClient = () => {
     return DynamoDBDocument.from(client);
 };
 
-module.exports = {
+export default {
     readEntries: async (year) => {
         const { Items } = await getDynamoDBClient()
             .send(new ScanCommand({

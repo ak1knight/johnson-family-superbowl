@@ -1,6 +1,6 @@
 import data from '../data'
 import { useState, useEffect } from 'react';
-import { teams, periodNames } from "../data/formdata";
+import { teams, periodNames, Entry, AnsweredQuestion } from "../data/formdata";
 
 function formatScore(entry, quarter, year) {
     if (!entry[teams[year][0].name] || !entry[teams[year][1].name])
@@ -24,10 +24,19 @@ function toSeconds(str) {
     }
 }
 
-const BigBoardTable = ({year}) => {
-    const [entries, setEntries] = useState();
-    const [winningEntry, setWinningEntry] = useState();
-    const [winningNumbers, setWinningNumbers] = useState();
+type WinningNumbers = {
+    "Quarter 1"?: number, 
+    "Quarter 2"?: number, 
+    "Quarter 3"?: number, 
+    "Final"?: number, 
+    topthree?: [first: number, second: number, third: number],
+    anthemLength?: number
+}
+
+const BigBoardTable = ({year}: {year: string | number}) => {
+    const [entries, setEntries] = useState<Array<{entry: Entry, yearKey: string | number, id: number}>>();
+    const [winningEntry, setWinningEntry] = useState<{entry: Entry, yearKey: string | number}>();
+    const [winningNumbers, setWinningNumbers] = useState<WinningNumbers>({});
 
     useEffect(() => {
         setEntries(null)
@@ -43,7 +52,7 @@ const BigBoardTable = ({year}) => {
     }, [year]);
 
     useEffect(() => {
-        let wn = {};
+        let wn:WinningNumbers = {};
         setWinningNumbers(null);
 
         if (!winningEntry || Object.keys(winningEntry.entry).length === 0 || !winningEntry.entry[teams[year][0].name]) {
@@ -77,23 +86,23 @@ const BigBoardTable = ({year}) => {
         setWinningNumbers(wn);
     }, [winningEntry])
 
-    function checkWinningScore(entry, period) {
+    function checkWinningScore(entry: Entry, period: "Quarter 1" | "Quarter 2" | "Quarter 3" | "Final") {
         return !!winningNumbers && !!winningEntry && !!winningEntry.entry[teams[year][0].name] && !!winningEntry.entry[teams[year][1].name] && !!winningEntry.entry[teams[year][0].name][period] && Math.abs(entry[teams[year][0].name][period].score - winningEntry.entry[teams[year][0].name][period].score) + Math.abs(entry[teams[year][1].name][period].score - winningEntry.entry[teams[year][1].name][period].score) == winningNumbers[period];
     }
 
-    function checkFinalScore(entry) {
+    function checkFinalScore(entry: Entry) {
         return !!winningNumbers?.topthree && !!winningEntry && !!winningEntry.entry[teams[year][0].name] && !!winningEntry.entry[teams[year][1].name] && !!winningEntry.entry[teams[year][0].name]["Final"] && winningNumbers.topthree.indexOf(Math.abs(entry[teams[year][0].name]["Final"].score - winningEntry.entry[teams[year][0].name]["Final"].score) + Math.abs(entry[teams[year][1].name]["Final"].score - winningEntry.entry[teams[year][1].name]["Final"].score));
     }
 
-    function checkTiebreaker(entry, period) {
+    function checkTiebreaker(entry: Entry, period: "Quarter 1" | "Quarter 2" | "Quarter 3" | "Final") {
         return !!winningNumbers && !!winningEntry && !!winningEntry.entry[period]?.tiebreaker && Math.abs(entry[period].tiebreaker - winningEntry.entry[period].tiebreaker) == Math.min(...entries.filter(e => checkWinningScore(e.entry, period)).map(e => Math.abs(e.entry[period].tiebreaker - winningEntry.entry[period].tiebreaker)));
     }
 
-    function checkWinningYards(entry, team) {
+    function checkWinningYards(entry: Entry, team: string | number) {
         return !!winningNumbers && !!winningEntry && !!winningEntry.entry[team] && Math.abs(entry[team].yards - winningEntry.entry[team].yards) == winningNumbers[team];
     }
 
-    function checkWinningAnthemTime(entry) {
+    function checkWinningAnthemTime(entry: Entry) {
         return !!winningNumbers && !!winningEntry && !!winningEntry.entry[0].response && Math.abs(toSeconds(entry[0].response) - toSeconds(winningEntry.entry[0].response)) == winningNumbers.anthemLength;
     }
 
@@ -114,7 +123,7 @@ const BigBoardTable = ({year}) => {
                     <th scope="row">{e.entry.name}</th>
                     <td className={checkWinningAnthemTime(e.entry) ? 'bg-primary text-white border border-primary text-center' : 'text-center'} >{e.entry[0].response}</td>
                     {periodNames.slice(0, 3).map((q, i) => <td className={checkWinningScore(e.entry, q) ? `${checkTiebreaker(e.entry, q) ? `bg-primary text-white` : `text-primary bg-light`} border-primary border text-center` : 'text-center'} key={i}>{formatScore(e.entry, q, year)}</td>)}
-                    <td className={finalPlace !== false && finalPlace > -1 ? `${finalColors[finalPlace]} border text-center` : 'text-center'}>{finalPlace !== false && finalPlace > -1 && <span class="badge badge-light">{checkFinalScore(e.entry) + 1}</span>} {formatScore(e.entry, 'Final', year)}</td>
+                    <td className={!!finalPlace && finalPlace > -1 ? `${finalColors[finalPlace]} border text-center` : 'text-center'}>{!!finalPlace && finalPlace > -1 && <span className="badge badge-light">{checkFinalScore(e.entry) + 1}</span>} {formatScore(e.entry, 'Final', year)}</td>
                     {teams[year].map((t, i) => <td className={checkWinningYards(e.entry, t.name) ? 'bg-primary text-white border border-primary text-center' : 'text-center'} key={i}>{e.entry[t.name]?.yards}</td>)}
                 </tr>
             }) :
