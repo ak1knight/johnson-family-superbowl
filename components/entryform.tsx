@@ -8,7 +8,7 @@ import { teams, periodNames } from "../data/formdata";
 
 let formData = {};
 
-teams[2022].forEach(t => {
+teams[2023].forEach(t => {
     formData[t.name] = { yards: '' }
     periodNames.forEach(q => {
         formData[t.name][q] = { score: '' };

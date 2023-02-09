@@ -7,7 +7,7 @@ import { questions } from "../data/formdata";
 
 
 const Home = () => {
-    const [year, setYear] = useState(2022);
+    const [year, setYear] = useState(2023);
 
     const titleQs = [{question: "Score", short: "Score"}, {question: "Yards", short: "Yards"}, ...questions[year]]
 

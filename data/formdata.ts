@@ -3,7 +3,8 @@ enum TeamName {
     Buccaneers = "Buccaneers",
     "49ers" = "49ers",
     Rams = "Rams",
-    Bengals = "Bengals"
+    Bengals = "Bengals",
+    Eagles = "Eagles"
 }
 
 export type Team = {
@@ -36,6 +37,7 @@ export const teams:{[year: string]: Year} = {
     "2020": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName["49ers"], icon: "/images/sf.svg" }], 
     "2021": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName.Buccaneers, icon: "/images/tb.svg" }],
     "2022": [{ name: TeamName.Rams, icon: "/images/la.svg" }, { name: TeamName.Bengals, icon: "/images/cin.svg" }],
+    "2023": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName.Eagles, icon: "/images/phi.svg" }]
 } as const; 
 
 export const periodNames = ["Quarter 1", "Quarter 2", "Quarter 3", "Final"] as const;
@@ -62,25 +64,27 @@ export type Entry = {
     "49ers"?: TeamScore,
     [TeamName.Buccaneers]?: TeamScore,
     [TeamName.Bengals]?: TeamScore,
-    [TeamName.Rams]?: TeamScore
+    [TeamName.Rams]?: TeamScore,
+    [TeamName.Eagles]?: TeamScore,
     "Quarter 1": {
         tiebreaker: number
     },
     "Quarter 2": {
         tiebreaker: number
-    }
+    },
     "Quarter 3": {
         tiebreaker: number
-    }
+    },
     "Final": {
         tiebreaker: number
-    }
+    },
     name: string
 }
 
 export const tiebreakers = {
     "2021": {"Quarter 1": "Chiefs Passing Yards", "Quarter 2": "Buccaneers Rushing Yards", "Quarter 3": "Combined Penalty Yards"},
-    "2022": {"Quarter 1": "Bengals Passing Yards", "Quarter 2": "Ramss Rushing Yards", "Quarter 3": "Combined Penalty Yards"}
+    "2022": {"Quarter 1": "Bengals Passing Yards", "Quarter 2": "Rams Rushing Yards", "Quarter 3": "Combined Penalty Yards"},
+    "2023": {"Quarter 1": "Bengals Passing Yards", "Quarter 2": "Rams Rushing Yards", "Quarter 3": "Combined Penalty Yards"}
 }
 
 export let questions: Record<string, Question[]> = {
@@ -323,6 +327,81 @@ export let questions: Record<string, Question[]> = {
                 { name: "Joe Burrow (CIN QB)", image: "/images/burrow.webp", score: 150 }, 
                 { name: "Cooper Kupp (LAR WR)", image: "/images/kupp.webp", score: 200 },
                 { name: "Aaron Donald (LAR DE)", image: "/images/donald.webp", score: 400 },
+                { name: "Other", score: 200 }
+            ]
+        }
+    ],
+    "2023": [
+        
+        {
+            question: "How long will it take Chris Stapleton to sing the National Anthem?",
+            short: "National Anthem",
+            extrainfo: `Neil Diamond holds the record for the quickest rendition of the national anthem in Super Bowl history. He raced through The Star-Spangled Banner 
+                in just 1 minute and 2 seconds at Super Bowl 21. By contrast, it took Alicia Keys 2 minutes and 36 seconds at Super Bowl 47. The average time now stands 
+                at 1 minute and 43 seconds.`,
+            config: {
+                placeholder: "M:SS"
+            }
+        },
+        {
+            question: "What will the opening coin toss land on?",
+            short: 'Coin Toss',
+            extrainfo: 'Since the first Super Bowl, HEADS has come up 25 times and TAILS 28. The winner of the Super Bowl has won the coin toss 24 times with HEADS coming up 12 times.',
+            options: [{ name: "Heads", score: 100 }, { name: "Tails", score: 100 }]
+        },
+        {
+            question: "Which will happen first in the game?",
+            short: 'Sack or TD',
+            options: [{ name: "Sack", score: 90 }, { name: "Touchdown", score: 100 }]
+        },
+        {
+            question: "Which team will score first?",
+            short: 'First Score',
+            options: [{ name: "Eagles", score: 100, image: "/images/phi.svg" }, { name: "Kansas City", score: 100, image: "/images/kc.svg" }]
+        },
+        {
+            question: "Which company's commercial will play first?",
+            short: 'Commercial',
+            options: [{ name: "Meta (Facebook)", score: 90, image: 'images/meta.svg' }, { name: "Amazon Prime", score: 110, image: 'images/amazon_prime.svg' }, { name: "Google", score: 110, image: 'images/google.svg' }]
+        },
+        {
+            question: "What will be the number of the player who scores the first touchdown?",
+            short: 'TD Number',
+            options: [{ name: "11 or lower", score: 100 }, { name: "12 or higher", score: 100 }]
+        },
+        {
+            question: "Which artist will make a guest appearance with Rihanna during the halftime show?",
+            short: 'HT Guest Artist',
+            extrainfo: "If multiple artists appear, points will be given the first artist that appears (besides other)",
+            options: [
+                { name: "Jay-Z", score: 100 },
+                { name: "Calvin Harris", score: 100 },
+                { name: "Drake", score: 100 },
+                { name: "A$AP Rocky", score: 150 },
+                { name: "None/Other", score: 200 }
+            ]
+        },
+        {
+            question: "What color will Rihanna be wearing for her last song?",
+            short: 'HT Color',
+            options: [{ name: "Black", score: 100 }, { name: "White", score: 150 }, { name: "Grey/Silver", score: 150 }, { name: "Other", score: 150 }]
+        },
+        {
+            question: "Will there be a fourth quarter comeback?",
+            short: 'Comeback',
+            options: [{ name: "Yes", score: 140 }, { name: "No", score: 60 }]
+        },
+        {
+            question: "Will the team who scores first win the game?",
+            short: 'First Score Wins',
+            options: [{ name: "Yes", score: 85 }, { name: "No", score: 115 }]
+        },
+        {
+            question: "Who will win Super Bowl LVII MVP?",
+            short: 'MVP',
+            options: [
+                { name: "Patrick Mahomes (KC QB)", image: "/images/mahomes2.webp", score: 120},
+                { name: "Jalen Hurts (PHI QB)", image: "/images/hurts.webp", score: 125 },
                 { name: "Other", score: 200 }
             ]
         }
