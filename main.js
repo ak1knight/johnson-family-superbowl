@@ -14,7 +14,7 @@ async function main(event, context) {
                 "#yr": "yearKey"
             },
             ExpressionAttributeValues: {
-                ":yyyy": 2021
+                ":yyyy": 2023
             }
         };
         tableContents = await scanDB(params);

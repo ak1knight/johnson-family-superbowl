@@ -4,8 +4,9 @@ import { teams } from "../data/formdata";
 
 const extrainfo = ''
 
-const Yards = React.forwardRef<HTMLDivElement, {year:number, formData:any}>((props, ref) => {
+const Yards = React.forwardRef<HTMLDivElement, {year:number, formData:any}>(function Yards(props, ref) {
     teams[props.year].forEach(t => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         [props.formData[t.name].yards, props.formData[t.name].setYards] = useState(props.formData[t.name].yards || '');
     });
     return <Card id="yards" title="Total Yards" extrainfo={extrainfo} ref={ref}>

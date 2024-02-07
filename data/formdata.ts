@@ -37,7 +37,8 @@ export const teams:{[year: string]: Year} = {
     "2020": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName["49ers"], icon: "/images/sf.svg" }], 
     "2021": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName.Buccaneers, icon: "/images/tb.svg" }],
     "2022": [{ name: TeamName.Rams, icon: "/images/la.svg" }, { name: TeamName.Bengals, icon: "/images/cin.svg" }],
-    "2023": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName.Eagles, icon: "/images/phi.svg" }]
+    "2023": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName.Eagles, icon: "/images/phi.svg" }],
+    "2024": [{ name: TeamName.Chiefs, icon: "/images/kc.svg" }, { name: TeamName["49ers"], icon: "/images/sf.svg" }],
 } as const; 
 
 export const periodNames = ["Quarter 1", "Quarter 2", "Quarter 3", "Final"] as const;
@@ -84,7 +85,8 @@ export type Entry = {
 export const tiebreakers = {
     "2021": {"Quarter 1": "Chiefs Passing Yards", "Quarter 2": "Buccaneers Rushing Yards", "Quarter 3": "Combined Penalty Yards"},
     "2022": {"Quarter 1": "Bengals Passing Yards", "Quarter 2": "Rams Rushing Yards", "Quarter 3": "Combined Penalty Yards"},
-    "2023": {"Quarter 1": "Bengals Passing Yards", "Quarter 2": "Rams Rushing Yards", "Quarter 3": "Combined Penalty Yards"}
+    "2023": {"Quarter 1": "Eagles Passing Yards", "Quarter 2": "Chiefs Rushing Yards", "Quarter 3": "Combined Penalty Yards"},
+    "2024": {"Quarter 1": "Chiefs Passing Yards", "Quarter 2": "49ers Rushing Yards", "Quarter 3": "Combined Penalty Yards"}
 }
 
 export let questions: Record<string, Question[]> = {
@@ -357,7 +359,7 @@ export let questions: Record<string, Question[]> = {
         {
             question: "Which team will score first?",
             short: 'First Score',
-            options: [{ name: "Eagles", score: 100, image: "/images/phi.svg" }, { name: "Kansas City", score: 100, image: "/images/kc.svg" }]
+            options: [{ name: "Philadelphia", score: 100, image: "/images/phi.svg" }, { name: "Kansas City", score: 100, image: "/images/kc.svg" }]
         },
         {
             question: "Which company's commercial will play first?",
@@ -405,5 +407,8 @@ export let questions: Record<string, Question[]> = {
                 { name: "Other", score: 200 }
             ]
         }
+    ],
+    "2024": [
+
     ],
 };

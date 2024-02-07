@@ -7,12 +7,13 @@ import { questions } from "../data/formdata";
 
 
 const Home = () => {
-    const [year, setYear] = useState(2023);
+    const [year, setYear] = useState(2024);
 
     const titleQs = [{question: "Score", short: "Score"}, {question: "Yards", short: "Yards"}, ...questions[year]]
 
     const items = [{question: "Score"}, {question: "Yards"}, ...questions[year]].map(q => `${q.question.toLowerCase().replace(/( |\W)/g, '')}`)
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const sectionRefs = items.map(() => useRef<HTMLDivElement>(null))
 
     console.log(sectionRefs)

@@ -21,7 +21,7 @@ const getDynamoDBClient = () => {
     return DynamoDBDocument.from(client);
 };
 
-export default {
+const apiCalls = {
     readEntries: async (year) => {
         const { Items } = await getDynamoDBClient()
             .send(new ScanCommand({
@@ -34,7 +34,7 @@ export default {
 
         return Items;
     },
-    getEntry: async entryId => {
+    getEntry: async (entryId) => {
         const entry = await getDynamoDBClient()
             .send(new GetCommand({
                 TableName: "SuperBowlEntries",
@@ -54,20 +54,20 @@ export default {
                 id: entryId
             },
             UpdateExpression: "set entry = :e",
-            ExpressionAttributeValues:{
+            ExpressionAttributeValues: {
                 ":e": entry
             }
         }));
     },
-    createEntry: async entry => {
+    createEntry: async (entry) => {
         await getDynamoDBClient().send(new PutCommand({
-                TableName: "SuperBowlEntries",
-                Item: {
-                    id: Date.now(),
-                    yearKey: 2022,
-                    entry
-                }
-            }));
+            TableName: "SuperBowlEntries",
+            Item: {
+                id: Date.now(),
+                yearKey: 2024,
+                entry
+            }
+        }));
     },
     createWinningEntry: async (entry, year) => {
         const client = getDynamoDBClient();
@@ -78,13 +78,13 @@ export default {
                 id: String(year - 2019)
             },
             UpdateExpression: "set entry = :e",
-            ExpressionAttributeValues:{
+            ExpressionAttributeValues: {
                 ":e": entry
             }
         });
     },
     getWinningEntry: async (year) => {
-        console.log(year)
+        console.log(year);
         const { Item } = await getDynamoDBClient()
             .get({
                 TableName: "WinningEntry",
@@ -96,3 +96,4 @@ export default {
         return Item;
     }
 };
+export default apiCalls;

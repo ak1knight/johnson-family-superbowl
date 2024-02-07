@@ -1,5 +1,4 @@
 module.exports = {
-    //target: 'serverless', // <- add here
     webpack: config => {
 
         if (!process.env.BUNDLE_AWS_SDK) {

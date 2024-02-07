@@ -4,10 +4,12 @@ import { periodNames, teams, tiebreakers, Team } from "../data/formdata"
 
 const extrainfo = ''
 
-const Scores = React.forwardRef<HTMLDivElement, {year:number, formData:any}>(({year, formData}, ref) => {
+const Scores = React.forwardRef<HTMLDivElement, {year:number, formData:any}>(function Scores({year, formData}, ref) {
     teams[year].forEach((t:Team) => {
         periodNames.forEach(q => {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
             [formData[t.name][q].score, formData[t.name][q].setScore] = useState(formData[t.name][q].score || '');
+            // eslint-disable-next-line react-hooks/rules-of-hooks
             [formData[q].tiebreaker, formData[q].setTiebreaker] = useState(formData[q].tiebreaker || '');
         })
     });

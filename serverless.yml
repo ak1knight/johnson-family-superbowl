@@ -1,5 +1,5 @@
 johnsonFamilySuperbowl:
-    component: "@sls-next/serverless-component@1.19.0"
+    component: "@sls-next/serverless-component"
     inputs:
         policy: "arn:aws:iam::534983912774:policy/AccessSuperBowlTable"
         domain: "johnsonfamilysuperbowl.com"

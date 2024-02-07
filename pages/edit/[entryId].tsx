@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Scrollspy } from '@makotot/ghostui'
 import fetch from 'isomorphic-unfetch';
-import { useRouter } from 'next/router';
 import EntryForm from "../../components/entryform"
 import Layout from '../../components/layout'
 import { questions } from "../../data/formdata"; 
@@ -25,7 +24,8 @@ const Edit = ({currentEntry, entryId}) => {
     // }, []);
 
     // console.log(!!currentEntry && Object.values(currentEntry.entry));
-    const sectionRefs = [{question: "Score", short: "Score"}, {question: "Yards", short: "Yards"}, ...questions["2022"]].map(() => useRef<HTMLDivElement>(null))
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const sectionRefs = [{question: "Score", short: "Score"}, {question: "Yards", short: "Yards"}, ...questions["2023"]].map(() => useRef<HTMLDivElement>(null))
 
     return <Layout>
         <div className="jumbotron jumbotron-fluid bg-warning text-white">
